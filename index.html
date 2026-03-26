@@ -205,11 +205,11 @@
 }
 @media (max-width: 600px) {
   .hero-left { padding: 40px 5%; }
-  .hero-right { min-height: 480px; }
-  .hr-steps { gap: 0; padding: 80px 22px 28px; }
+  .hero-right { min-height: 420px; }
+  .hr-steps { padding: 80px 22px 28px; }
   .hr-step-title { font-size: 19px; }
   .hr-step-desc { font-size: 11px; }
-  .hr-header { left: 22px; }
+  .hr-header { left: 22px; right: 22px; }
   .hr-bottom { padding: 14px 22px; }
 }
 
@@ -259,9 +259,9 @@
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1000px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-left { padding: 60px 6%; }
-  .hero-right { min-height: 460px; order: -1; }
+  .hero { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .hero-left { padding: 60px 6%; order: 0; }
+  .hero-right { min-height: 460px; order: 0; }
   .features-grid { grid-template-columns: 1fr 1fr; }
   .product-preview-grid { grid-template-columns: 1fr 1fr; }
   .why-strip { grid-template-columns: 1fr; }
