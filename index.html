@@ -5,196 +5,232 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Nirvana Tools India Pvt. Ltd. — Incredible Tools, Exceptional Value</title>
 <link rel="stylesheet" href="shared.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-/* ── HERO ── */
+/* ─── HERO ─── */
 .hero {
   margin-top: 72px;
   min-height: calc(100vh - 72px);
   display: grid;
   grid-template-columns: 52% 48%;
-  position: relative;
-  overflow: hidden;
   background: var(--white);
 }
 .hero-left {
   display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 6% 80px 8%;
-  position: relative; z-index: 2;
+  padding: 80px 6% 80px 8%; position: relative; z-index: 2;
 }
 .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
 .hero-eyebrow span { width: 36px; height: 3px; background: var(--orange); }
 .hero-eyebrow p { font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--orange); font-weight: 700; }
-.hero-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(58px, 7.5vw, 110px);
-  font-weight: 900;
-  text-transform: uppercase;
-  line-height: 0.88;
-  letter-spacing: -0.02em;
-  color: var(--black);
-  margin-bottom: 28px;
-}
+.hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(58px, 7.5vw, 110px); font-weight: 900; text-transform: uppercase; line-height: 0.88; letter-spacing: -0.02em; color: var(--black); margin-bottom: 28px; }
 .hero-title em { font-style: normal; color: var(--orange); display: block; }
 .hero-desc { font-size: 16px; line-height: 1.75; color: var(--gray); max-width: 460px; font-weight: 300; margin-bottom: 40px; }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
-.hero-stats { display: flex; gap: 40px; padding-top: 36px; border-top: 1.5px solid var(--border); }
+.hero-stats { display: flex; gap: 40px; padding-top: 36px; border-top: 1.5px solid var(--border); flex-wrap: wrap; }
 .hero-stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 900; color: var(--orange); line-height: 1; display: block; }
 .hero-stat-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-top: 4px; display: block; font-weight: 600; }
 
-/* ── 3D HERO RIGHT ── */
+/* ═══════════════════════════════════════════
+   HERO RIGHT — Swiss Poster / Graphic Design
+   ═══════════════════════════════════════════ */
+/* ── HERO-RIGHT REDESIGN ── */
 .hero-right {
-  background: var(--bg2);
   position: relative;
   overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
+  background: #111110;
+  display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
 }
-.hero-right::before {
-  content: '';
+ 
+/* Diagonal orange slash across top-right */
+.hr-slash {
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 340px; height: 340px;
+  background: var(--orange);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  opacity: 0;
+  animation: slashIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+}
+/* Faint dot-grid texture */
+.hr-dots {
   position: absolute; inset: 0;
-  background: repeating-linear-gradient(45deg, transparent, transparent 28px, rgba(247,147,30,0.04) 28px, rgba(247,147,30,0.04) 29px);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
   pointer-events: none;
 }
-.hero-right-corner { position: absolute; top: 0; right: 0; width: 120px; height: 120px; background: var(--orange); clip-path: polygon(100% 0, 100% 100%, 0 0); pointer-events: none; z-index: 3; }
-
-/* 3D Tool carousel */
-.tool-3d-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-
-#three-canvas {
-  width: 100%;
-  height: 420px;
-  display: block;
-}
-
-.tool-selector {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  z-index: 4;
-  position: relative;
-}
-.tool-btn {
-  padding: 8px 20px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  background: transparent;
-  border: 1.5px solid rgba(0,0,0,0.15);
-  color: var(--gray);
-  cursor: pointer;
-  transition: all 0.2s;
-  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-}
-.tool-btn.active {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: var(--white);
-}
-.tool-btn:hover:not(.active) {
-  border-color: var(--orange);
-  color: var(--orange);
-}
-
-.tool-info-label {
+/* Ambient orange glow bottom */
+.hr-glow {
   position: absolute;
-  bottom: 90px;
-  left: 0; right: 0;
-  text-align: center;
-  pointer-events: none;
-  z-index: 4;
-}
-.tool-info-label .tool-name-big {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 22px;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--black);
-  letter-spacing: 0.06em;
-}
-.tool-info-label .tool-spec {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--orange);
-  font-weight: 700;
-  margin-top: 3px;
-}
-.tool-info-badge {
-  position: absolute;
-  bottom: 148px;
-  right: 28px;
-  background: var(--orange);
-  color: var(--white);
-  padding: 10px 18px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  z-index: 4;
-}
-
-/* drag hint */
-.drag-hint {
-  position: absolute;
-  top: 20px;
-  left: 50%;
+  bottom: -80px; left: 50%;
   transform: translateX(-50%);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.3);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 4;
+  width: 480px; height: 260px;
+  background: radial-gradient(ellipse at center, rgba(247,147,30,0.14) 0%, transparent 70%);
+  pointer-events: none;
 }
-.drag-hint svg { opacity: 0.4; }
+ 
+/* ── HEADER LABEL ── */
+.hr-header {
+  position: absolute;
+  top: 32px; left: 36px; right: 36px;
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease 0.6s forwards;
+}
+.hr-header-line { flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+.hr-header-label {
+  font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+  font-weight: 700; color: var(--orange); white-space: nowrap;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+ 
+/* ── PROCESS STEPS ── */
+.hr-steps {
+  position: relative; z-index: 2;
+  padding: 100px 36px 44px;
+  display: flex; flex-direction: column; gap: 0;
+}
+ 
+.hr-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0 18px;
+  align-items: stretch;
+  opacity: 0;
+}
+.hr-step:nth-child(1) { animation: fadeSlideUp 0.55s ease 0.65s forwards; }
+.hr-step:nth-child(2) { animation: fadeSlideUp 0.55s ease 0.82s forwards; }
+.hr-step:nth-child(3) { animation: fadeSlideUp 0.55s ease 0.99s forwards; }
+.hr-step:nth-child(4) { animation: fadeSlideUp 0.55s ease 1.16s forwards; }
+ 
+/* Left column: number + vertical connector */
+.hr-step-spine {
+  display: flex; flex-direction: column; align-items: center;
+}
+.hr-step-num {
+  width: 48px; height: 48px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 900;
+  color: var(--orange);
+  border: 1.5px solid rgba(247,147,30,0.35);
+  background: rgba(247,147,30,0.06);
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background 0.2s, border-color 0.2s;
+}
+.hr-step:hover .hr-step-num {
+  background: rgba(247,147,30,0.16);
+  border-color: var(--orange);
+}
+.hr-step-connector {
+  flex: 1; width: 1px;
+  background: linear-gradient(to bottom, rgba(247,147,30,0.25), rgba(247,147,30,0.05));
+  margin: 4px 0;
+}
+.hr-step:last-child .hr-step-connector { display: none; }
+ 
+/* Right column: content */
+.hr-step-body {
+  padding: 4px 0 28px;
+}
+.hr-step-tag {
+  font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+  font-weight: 700; color: rgba(247,147,30,0.55);
+  font-family: 'Barlow Condensed', sans-serif;
+  margin-bottom: 5px;
+}
+.hr-step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: #fff; line-height: 1.05;
+  margin-bottom: 6px;
+}
+.hr-step-desc {
+  font-size: 12px; color: rgba(255,255,255,0.38);
+  line-height: 1.65; font-weight: 300;
+  max-width: 280px;
+}
+/* Pill spec badge */
+.hr-step-badge {
+  display: inline-block; margin-top: 8px;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--orange);
+  background: rgba(247,147,30,0.1);
+  border: 1px solid rgba(247,147,30,0.22);
+  padding: 3px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+ 
+/* ── BOTTOM STRIP ── */
+.hr-bottom {
+  position: relative; z-index: 2;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 18px 36px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease 1.35s forwards;
+}
+.hr-bottom-text {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.22); font-weight: 600;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.hr-bottom-badge {
+  display: flex; align-items: center; gap: 7px;
+}
+.hr-bottom-dot {
+  width: 6px; height: 6px; background: var(--orange);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+.hr-bottom-label {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--orange); font-weight: 700;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+ 
+@keyframes slashIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+ 
+/* ── RESPONSIVE ── */
+@media (max-width: 1000px) {
+  .hero-right { min-height: 520px; }
+  .hr-steps { padding: 90px 28px 36px; }
+  .hr-header { left: 28px; right: 28px; }
+  .hr-bottom { padding: 16px 28px; }
+}
+@media (max-width: 600px) {
+  .hero-right { min-height: 480px; }
+  .hr-steps { gap: 0; padding: 80px 22px 28px; }
+  .hr-step-title { font-size: 19px; }
+  .hr-step-desc { font-size: 11px; }
+  .hr-header { left: 22px; }
+  .hr-bottom { padding: 14px 22px; }
+}
 
-/* ── FEATURED ── */
+/* ─── KEYFRAMES ─── */
+@keyframes blockReveal  { to { clip-path: inset(0 0% 0 0); } }
+@keyframes ruleGrow     { to { transform: scaleX(1); } }
+@keyframes ruleGrowV    { to { transform: scaleY(1); } }
+@keyframes fadeIn       { to { opacity: 1; } }
+@keyframes fadeSlideUp  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── OTHER SECTIONS ─── */
 .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 56px; }
-.feature-card {
-  background: var(--white);
-  padding: 36px 28px;
-  border-top: 3px solid transparent;
-  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-  cursor: default;
-}
+.feature-card { background: var(--white); padding: 36px 28px; border-top: 3px solid transparent; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
 .feature-card:hover { border-top-color: var(--orange); transform: translateY(-4px); box-shadow: var(--shadow); }
 .feature-icon { width: 48px; height: 48px; background: var(--orange-light); display: grid; place-items: center; margin-bottom: 20px; }
-.feature-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 10px; letter-spacing: 0.03em; }
+.feature-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 10px; }
 .feature-desc { font-size: 13px; color: var(--gray); line-height: 1.7; font-weight: 300; }
 
-/* ── PRODUCT PREVIEW ── */
 .product-preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-.product-preview-card {
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  padding: 0;
-  overflow: hidden;
-  transition: box-shadow 0.25s, transform 0.25s;
-  text-decoration: none; color: inherit;
-  display: block;
-}
+.product-preview-card { background: var(--white); border: 1.5px solid var(--border); overflow: hidden; transition: box-shadow 0.25s, transform 0.25s; text-decoration: none; color: inherit; display: block; }
 .product-preview-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-.product-preview-img {
-  height: 200px;
-  background: var(--bg2);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-}
-.product-preview-img svg { opacity: 0.18; transition: opacity 0.3s, transform 0.3s; }
-.product-preview-card:hover .product-preview-img svg { opacity: 0.28; transform: scale(1.05); }
+.product-preview-img { height: 200px; background: var(--bg2); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.product-preview-img img { width: 100%; height: 100%; object-fit: cover; }
 .product-preview-img-label { position: absolute; top: 14px; left: 14px; background: var(--orange); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; }
 .product-preview-body { padding: 24px 22px 26px; }
 .product-preview-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; color: var(--black); }
@@ -203,7 +239,6 @@
 .product-preview-link::after { content: '→'; transition: transform 0.2s; }
 .product-preview-card:hover .product-preview-link::after { transform: translateX(4px); }
 
-/* ── WHY US STRIP ── */
 .why-strip { background: var(--black); padding: 80px 8%; display: grid; grid-template-columns: 1fr 3fr; gap: 60px; align-items: center; }
 .why-strip-title { font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; text-transform: uppercase; color: var(--white); line-height: 0.95; }
 .why-strip-title em { font-style: normal; color: var(--orange); display: block; }
@@ -214,16 +249,17 @@
 .why-label { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; color: var(--white); margin-bottom: 6px; margin-top: 4px; }
 .why-desc { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; font-weight: 300; }
 
-/* ── CTA ── */
 .home-cta { background: var(--orange); padding: 80px 8%; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; overflow: hidden; position: relative; }
 .home-cta::after { content: 'NTI'; position: absolute; right: 2%; top: 50%; transform: translateY(-50%); font-family: 'Barlow Condensed', sans-serif; font-size: 260px; font-weight: 900; color: rgba(0,0,0,0.07); line-height: 1; pointer-events: none; }
 .home-cta-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(34px, 5vw, 60px); font-weight: 900; text-transform: uppercase; color: var(--white); line-height: 0.95; }
 .home-cta p { font-size: 15px; color: rgba(255,255,255,0.75); margin-top: 14px; max-width: 500px; font-weight: 300; }
 .home-cta-btns { display: flex; gap: 14px; flex-shrink: 0; position: relative; z-index: 1; }
 
+/* ─── RESPONSIVE ─── */
 @media (max-width: 1000px) {
   .hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
+  .hero-left { padding: 60px 6%; }
+  .hero-right { min-height: 460px; order: -1; }
   .features-grid { grid-template-columns: 1fr 1fr; }
   .product-preview-grid { grid-template-columns: 1fr 1fr; }
   .why-strip { grid-template-columns: 1fr; }
@@ -232,22 +268,21 @@
   .home-cta-btns { flex-direction: column; }
 }
 @media (max-width: 600px) {
+  .hero-right { min-height: 400px; }
   .features-grid { grid-template-columns: 1fr; }
   .product-preview-grid { grid-template-columns: 1fr; }
   .why-items { grid-template-columns: 1fr; }
+  .hero-stats { gap: 24px; }
+  .gr-tag-text { font-size: 12px; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="logo.png" alt="NTI Logo"/>
-    <div class="nav-logo-text">
-      <strong>Nirvana Tools</strong>
-      <span>India Pvt. Ltd.</span>
-    </div>
+    <div class="nav-logo-text"><strong>Nirvana Tools</strong><span>India Pvt. Ltd.</span></div>
   </a>
   <ul class="nav-links">
     <li><a href="index.html" class="active">Home</a></li>
@@ -256,78 +291,142 @@
     <li><a href="gallery.html">Gallery</a></li>
     <li class="nav-cta"><a href="contact.html">Contact Us</a></li>
   </ul>
-  <div class="nav-toggle" onclick="toggleMobile()">
-    <span></span><span></span><span></span>
-  </div>
+  <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
-<div class="nav-mobile" id="mobileNav">
-  <a href="index.html" class="active">Home</a>
-  <a href="about.html">About Us</a>
-  <a href="products.html">Products</a>
-  <a href="gallery.html">Gallery</a>
-  <a href="contact.html">Contact Us</a>
+
+<div class="nav-mobile-overlay" id="mobileNavOverlay">
+  <div class="nav-mobile-backdrop"></div>
+  <div class="nav-mobile-panel">
+    <div class="nav-mobile-header">
+      <div class="nav-logo-text"><strong>Nirvana Tools</strong><span>India Pvt. Ltd.</span></div>
+      <button class="nav-mobile-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+    <div class="nav-mobile-contact">
+      <div class="nav-mobile-contact-label">Quick Contact</div>
+      <a href="tel:+919925589060" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11z"/></svg>
+        +91 99255 89060
+      </a>
+      <a href="mailto:nirvanatoolspvtltd@gmail.com" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        nirvanatoolspvtltd@gmail.com
+      </a>
+    </div>
+    <div class="nav-mobile-cta"><a href="contact.html">Contact Us →</a></div>
+  </div>
 </div>
 
-<!-- HERO -->
+<!-- ═══════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════ -->
 <section class="hero">
+  <!-- LEFT -->
   <div class="hero-left">
-    <div class="hero-eyebrow fade-up">
-      <span></span>
-      <p>Made in Gujarat, India</p>
-    </div>
-    <h1 class="hero-title fade-up" data-delay="80ms">
-      Incredible
-      <em>Tools.</em>
-      Exceptional
-      Value.
-    </h1>
-    <p class="hero-desc fade-up" data-delay="160ms">
-      Nirvana Tools India Pvt. Ltd. manufactures premium forged agricultural and industrial hand tools — engineered for durability, precision, and real-world performance.
-    </p>
+    <div class="hero-eyebrow fade-up"><span></span><p>Made in Gujarat, India</p></div>
+    <h1 class="hero-title fade-up" data-delay="80ms">Incredible<em>Tools.</em>Exceptional Value.</h1>
+    <p class="hero-desc fade-up" data-delay="160ms">Nirvana Tools India Pvt. Ltd. manufactures premium forged agricultural and industrial hand tools — engineered for durability, precision, and real-world performance.</p>
     <div class="hero-actions fade-up" data-delay="240ms">
       <a href="products.html" class="btn btn-orange">Explore Products</a>
       <a href="contact.html" class="btn btn-outline">Get a Quote</a>
     </div>
     <div class="hero-stats fade-up" data-delay="320ms">
-      <div class="hero-stat">
-        <span class="hero-stat-num">50+</span>
-        <span class="hero-stat-label">Product Variants</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">100%</span>
-        <span class="hero-stat-label">Forged Steel</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">3</span>
-        <span class="hero-stat-label">Product Categories</span>
-      </div>
+      <div class="hero-stat"><span class="hero-stat-num">50+</span><span class="hero-stat-label">Product Variants</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-label">Forged Steel</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">Product Categories</span></div>
     </div>
   </div>
 
-  <!-- 3D TOOL VIEWER -->
   <div class="hero-right">
-    <div class="hero-right-corner"></div>
-    <div class="tool-3d-stage">
-      <div class="drag-hint">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>
-        Drag to rotate
+ 
+  <!-- Background layers -->
+  <div class="hr-slash"></div>
+  <div class="hr-dots"></div>
+  <div class="hr-glow"></div>
+ 
+  <!-- Top label -->
+  <div class="hr-header">
+    <div class="hr-header-label">How It's Made</div>
+    <div class="hr-header-line"></div>
+  </div>
+ 
+  <!-- Forging Process Steps -->
+  <div class="hr-steps">
+ 
+    <div class="hr-step">
+      <div class="hr-step-spine">
+        <div class="hr-step-num">01</div>
+        <div class="hr-step-connector"></div>
       </div>
-      <canvas id="three-canvas"></canvas>
-      <div class="tool-info-badge" id="tool-badge">Bestseller</div>
-      <div class="tool-info-label">
-        <div class="tool-name-big" id="tool-name">Hoe Round Eye</div>
-        <div class="tool-spec" id="tool-spec">Available: 1 – 5 LB</div>
-      </div>
-      <div class="tool-selector">
-        <button class="tool-btn active" onclick="switchTool(0, this)">Hoe</button>
-        <button class="tool-btn" onclick="switchTool(1, this)">Shovel</button>
-        <button class="tool-btn" onclick="switchTool(2, this)">Spade</button>
+      <div class="hr-step-body">
+        <div class="hr-step-tag">Raw Material</div>
+        <div class="hr-step-title">High-Carbon<br>Steel Billet</div>
+        <div class="hr-step-desc">Selected billets are cut to precise weight from certified high-carbon steel bar stock.</div>
+        <div class="hr-step-badge">C45 / C55 Grade Steel</div>
       </div>
     </div>
+ 
+    <div class="hr-step">
+      <div class="hr-step-spine">
+        <div class="hr-step-num">02</div>
+        <div class="hr-step-connector"></div>
+      </div>
+      <div class="hr-step-body">
+        <div class="hr-step-tag">Forming</div>
+        <div class="hr-step-title">Drop-Forge<br>Pressing</div>
+        <div class="hr-step-desc">Heated to 1200°C and hammer-forged in closed dies — grain structure aligned for maximum toughness.</div>
+        <div class="hr-step-badge">1200°C · Closed Die</div>
+      </div>
+    </div>
+ 
+    <div class="hr-step">
+      <div class="hr-step-spine">
+        <div class="hr-step-num">03</div>
+        <div class="hr-step-connector"></div>
+      </div>
+      <div class="hr-step-body">
+        <div class="hr-step-tag">Hardening</div>
+        <div class="hr-step-title">Quench &amp;<br>Temper</div>
+        <div class="hr-step-desc">Rapid oil or water quench followed by controlled tempering gives blades their working hardness.</div>
+        <div class="hr-step-badge">HRC 45–52 Hardness</div>
+      </div>
+    </div>
+ 
+    <div class="hr-step">
+      <div class="hr-step-spine">
+        <div class="hr-step-num">04</div>
+        <div class="hr-step-connector"></div>
+      </div>
+      <div class="hr-step-body">
+        <div class="hr-step-tag">Final Stage</div>
+        <div class="hr-step-title">Inspection<br>&amp; Dispatch</div>
+        <div class="hr-step-desc">Dimensional checks, edge sharpness and surface finish verified before export-grade packaging.</div>
+        <div class="hr-step-badge">100% Piece Inspection</div>
+      </div>
+    </div>
+ 
+  </div><!-- /hr-steps -->
+ 
+  <!-- Bottom strip -->
+  <div class="hr-bottom">
+    <span class="hr-bottom-text">Salal, Gujarat · N.H-48</span>
+    <div class="hr-bottom-badge">
+      <div class="hr-bottom-dot"></div>
+      <span class="hr-bottom-label">Production Active</span>
+    </div>
   </div>
+ 
+</div><!-- /hero-right -->
 </section>
 
-<!-- MARQUEE -->
+<!-- ─── MARQUEE ─── -->
 <div class="marquee-strip">
   <div class="marquee-inner">
     <div class="marquee-item">Hoe Round Eye<span class="marquee-dot"></span></div>
@@ -357,95 +456,44 @@
   </div>
 </div>
 
-<!-- WHY CHOOSE US -->
+<!-- ─── WHY NTI ─── -->
 <section class="why-strip">
-  <div class="fade-left">
-    <div class="why-strip-title">Why<br><em>Choose</em><br>NTI?</div>
-  </div>
+  <div class="fade-left"><div class="why-strip-title">Why<br><em>Choose</em><br>NTI?</div></div>
   <div class="why-items" data-stagger>
-    <div class="why-item">
-      <div class="why-num">01</div>
-      <div class="why-label">Forged Excellence</div>
-      <div class="why-desc">High-carbon steel, drop-forged and heat-treated for superior hardness and edge retention.</div>
-    </div>
-    <div class="why-item">
-      <div class="why-num">02</div>
-      <div class="why-label">50+ Variants</div>
-      <div class="why-desc">Extensive range of sizes, weights (LB/GM/KG) and eye types to match every application.</div>
-    </div>
-    <div class="why-item">
-      <div class="why-num">03</div>
-      <div class="why-label">Made in Gujarat</div>
-      <div class="why-desc">Manufactured at our plant on N.H-48, Ahmedabad–Himatnagar Highway, Sabarkantha.</div>
-    </div>
-    <div class="why-item">
-      <div class="why-num">04</div>
-      <div class="why-label">Bulk & OEM</div>
-      <div class="why-desc">Custom specifications, OEM branding and export-ready packaging for large-volume buyers.</div>
-    </div>
-    <div class="why-item">
-      <div class="why-num">05</div>
-      <div class="why-label">Quality First</div>
-      <div class="why-desc">Every tool inspected for dimensional accuracy, surface finish and structural integrity.</div>
-    </div>
-    <div class="why-item">
-      <div class="why-num">06</div>
-      <div class="why-label">Fast Delivery</div>
-      <div class="why-desc">Strategically located on N.H-48 for efficient nationwide distribution and logistics.</div>
-    </div>
+    <div class="why-item"><div class="why-num">01</div><div class="why-label">Forged Excellence</div><div class="why-desc">High-carbon steel, drop-forged and heat-treated for superior hardness and edge retention.</div></div>
+    <div class="why-item"><div class="why-num">02</div><div class="why-label">50+ Variants</div><div class="why-desc">Extensive range of sizes, weights (LB/GM/KG) and eye types to match every application.</div></div>
+    <div class="why-item"><div class="why-num">03</div><div class="why-label">Made in Gujarat</div><div class="why-desc">Manufactured at our plant on N.H-48, Ahmedabad–Himatnagar Highway, Sabarkantha.</div></div>
+    <div class="why-item"><div class="why-num">04</div><div class="why-label">Bulk &amp; OEM</div><div class="why-desc">Custom specifications, OEM branding and export-ready packaging for large-volume buyers.</div></div>
+    <div class="why-item"><div class="why-num">05</div><div class="why-label">Quality First</div><div class="why-desc">Every tool inspected for dimensional accuracy, surface finish and structural integrity.</div></div>
+    <div class="why-item"><div class="why-num">06</div><div class="why-label">Fast Delivery</div><div class="why-desc">Strategically located on N.H-48 for efficient nationwide distribution and logistics.</div></div>
   </div>
 </section>
 
-<!-- PRODUCT PREVIEW -->
+<!-- ─── FEATURED PRODUCTS ─── -->
 <section class="section">
   <div class="section-header-center">
-    <div class="section-eyebrow fade-up" style="justify-content:center">
-      <span></span><p>Our Range</p><span></span>
-    </div>
+    <div class="section-eyebrow fade-up" style="justify-content:center"><span></span><p>Our Range</p><span></span></div>
     <h2 class="section-title fade-up" data-delay="80ms">Featured <em>Products</em></h2>
     <p class="section-subtitle fade-up" data-delay="160ms">Comprehensive range of forged steel tools for agriculture and industry.</p>
   </div>
   <div class="product-preview-grid" data-stagger>
     <a href="products.html#hoes" class="product-preview-card">
-      <div class="product-preview-img">
-        <svg width="120" height="160" viewBox="0 0 120 160" fill="none"><path d="M18 12 L102 12 L97 68 L23 68 Z" fill="#1C1C1C"/><circle cx="60" cy="24" r="12" fill="#F5F3EF" stroke="#1C1C1C" stroke-width="2"/><path d="M21 65 L99 65 L101 73 L19 73 Z" fill="#888"/><rect x="54" y="73" width="12" height="80" rx="6" fill="#555"/></svg>
-        <span class="product-preview-img-label">Hoes</span>
-      </div>
-      <div class="product-preview-body">
-        <div class="product-preview-title">Agricultural Hoes</div>
-        <div class="product-preview-variants">20+ variants · 1 LB – 10 LB · Round, Sunken, D-Eye, Curved &amp; more</div>
-        <div class="product-preview-link">View All Hoes</div>
-      </div>
+      <div class="product-preview-img"><img src="hoe-home.png" alt="Agricultural Hoe"/><span class="product-preview-img-label">Hoes</span></div>
+      <div class="product-preview-body"><div class="product-preview-title">Agricultural Hoes</div><div class="product-preview-variants">20+ variants · 1 LB – 10 LB · Round, Sunken, D-Eye, Curved &amp; more</div><div class="product-preview-link">View All Hoes</div></div>
     </a>
     <a href="products.html#spades" class="product-preview-card">
-      <div class="product-preview-img">
-        <svg width="120" height="160" viewBox="0 0 120 160" fill="none"><path d="M60 12 L100 55 L60 98 L20 55 Z" fill="#1C1C1C"/><rect x="54" y="98" width="12" height="55" rx="6" fill="#555"/><path d="M97 53 L103 60 L60 102 L17 60 L23 53 Z" fill="#888"/></svg>
-        <span class="product-preview-img-label">Spades</span>
-      </div>
-      <div class="product-preview-body">
-        <div class="product-preview-title">Spades</div>
-        <div class="product-preview-variants">10+ variants · 1000 – 2150 GM · Bent, Round, Square, Triangular &amp; more</div>
-        <div class="product-preview-link">View All Spades</div>
-      </div>
+      <div class="product-preview-img"><img src="spade-home.png" alt="Spades"/><span class="product-preview-img-label">Spades</span></div>
+      <div class="product-preview-body"><div class="product-preview-title">Spades</div><div class="product-preview-variants">10+ variants · 1000 – 2150 GM · Bent, Round, Square, Triangular &amp; more</div><div class="product-preview-link">View All Spades</div></div>
     </a>
     <a href="products.html#shovels" class="product-preview-card">
-      <div class="product-preview-img">
-        <svg width="120" height="160" viewBox="0 0 120 160" fill="none"><path d="M30 15 L90 15 L95 60 L25 60 Z" fill="#1C1C1C"/><rect x="54" y="60" width="12" height="85" rx="6" fill="#555"/><path d="M27 58 L93 58 L96 66 L24 66 Z" fill="#888"/><rect x="40" y="138" width="40" height="10" rx="5" fill="#444"/></svg>
-        <span class="product-preview-img-label">Shovels</span>
-      </div>
-      <div class="product-preview-body">
-        <div class="product-preview-title">Shovels</div>
-        <div class="product-preview-variants">8+ variants · 1 – 3 KG · Square, Round, Flat, Spoon Blade &amp; more</div>
-        <div class="product-preview-link">View All Shovels</div>
-      </div>
+      <div class="product-preview-img"><img src="shovel-home.png" alt="Shovels"/><span class="product-preview-img-label">Shovels</span></div>
+      <div class="product-preview-body"><div class="product-preview-title">Shovels</div><div class="product-preview-variants">8+ variants · 1 – 3 KG · Square, Round, Flat, Spoon Blade &amp; more</div><div class="product-preview-link">View All Shovels</div></div>
     </a>
   </div>
-  <div style="text-align:center; margin-top:48px;" class="fade-up">
-    <a href="products.html" class="btn btn-orange">View Full Catalogue</a>
-  </div>
+  <div style="text-align:center; margin-top:48px;" class="fade-up"><a href="products.html" class="btn btn-orange">View Full Catalogue</a></div>
 </section>
 
-<!-- FEATURES -->
+<!-- ─── BUILT ON EXCELLENCE ─── -->
 <section class="section section-alt">
   <div class="section-header-center">
     <div class="section-eyebrow fade-up" style="justify-content:center"><span></span><p>What Sets Us Apart</p><span></span></div>
@@ -453,37 +501,29 @@
   </div>
   <div class="features-grid" data-stagger>
     <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      </div>
+      <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
       <div class="feature-title">High-Carbon Steel</div>
       <div class="feature-desc">All blades are made from quality high-carbon steel, drop-forged for strength and precision.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      </div>
+      <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
       <div class="feature-title">Heat Treated</div>
       <div class="feature-desc">Quench-hardened blades deliver lasting edge retention and resist wear even in harsh conditions.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
-      </div>
+      <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div>
       <div class="feature-title">Consistent Quality</div>
       <div class="feature-desc">Every tool is inspected for dimensional accuracy, balanced weight and surface finish.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M12 12v4"/></svg>
-      </div>
+      <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M12 12v4"/></svg></div>
       <div class="feature-title">Export Ready</div>
       <div class="feature-desc">Export-grade packaging and compliance for international buyers and distributors.</div>
     </div>
   </div>
 </section>
 
-<!-- HOME CTA -->
+<!-- ─── CTA ─── -->
 <div class="home-cta">
   <div class="fade-left">
     <div class="home-cta-title">Ready to Place<br>a Bulk Order?</div>
@@ -495,7 +535,7 @@
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-grid">
     <div>
@@ -544,504 +584,5 @@
 </footer>
 
 <script src="shared.js"></script>
-<script>
-function toggleMobile() {
-  document.getElementById('mobileNav').classList.toggle('open');
-}
-
-// ─── THREE.JS 3D TOOL VIEWER ───────────────────────────────────────────────
-(function() {
-  const canvas = document.getElementById('three-canvas');
-  if (!canvas) return;
-
-  // Scene
-  const scene = new THREE.Scene();
-  scene.background = null;
-
-  // Camera
-  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-  camera.position.set(0, 0, 5);
-
-  // Renderer
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
-
-  function resize() {
-    const w = canvas.parentElement.clientWidth;
-    const h = 420;
-    renderer.setSize(w, h);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-  scene.add(ambientLight);
-
-  const keyLight = new THREE.DirectionalLight(0xfff5e0, 2.2);
-  keyLight.position.set(4, 6, 5);
-  keyLight.castShadow = true;
-  scene.add(keyLight);
-
-  const fillLight = new THREE.DirectionalLight(0xf7931e, 0.6);
-  fillLight.position.set(-4, 2, 3);
-  scene.add(fillLight);
-
-  const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  rimLight.position.set(0, -3, -4);
-  scene.add(rimLight);
-
-  const topLight = new THREE.PointLight(0xffffff, 0.5, 20);
-  topLight.position.set(0, 8, 0);
-  scene.add(topLight);
-
-  // Materials
-  const steelMat = new THREE.MeshStandardMaterial({
-    color: 0x3a3a3a,
-    metalness: 0.92,
-    roughness: 0.18,
-    envMapIntensity: 1.2
-  });
-
-  const brightSteelMat = new THREE.MeshStandardMaterial({
-    color: 0x5a5a5a,
-    metalness: 0.95,
-    roughness: 0.12,
-  });
-
-  const edgeMat = new THREE.MeshStandardMaterial({
-    color: 0x888888,
-    metalness: 0.98,
-    roughness: 0.05,
-  });
-
-  const woodMat = new THREE.MeshStandardMaterial({
-    color: 0x7a4a1e,
-    metalness: 0.0,
-    roughness: 0.85,
-  });
-
-  const woodDarkMat = new THREE.MeshStandardMaterial({
-    color: 0x5c3410,
-    metalness: 0.0,
-    roughness: 0.9,
-  });
-
-  const orangeMat = new THREE.MeshStandardMaterial({
-    color: 0xf7931e,
-    metalness: 0.3,
-    roughness: 0.4,
-    emissive: 0xf7931e,
-    emissiveIntensity: 0.08
-  });
-
-  // ── HOE MODEL ──────────────────────────────────────────────────────────────
-  function buildHoe() {
-    const group = new THREE.Group();
-
-    // Main blade — trapezoidal, thick forged look
-    const bladeShape = new THREE.Shape();
-    bladeShape.moveTo(-1.1, 0);
-    bladeShape.lineTo(1.1, 0);
-    bladeShape.lineTo(0.85, 1.7);
-    bladeShape.lineTo(-0.85, 1.7);
-    bladeShape.closePath();
-
-    // Hole
-    const holePath = new THREE.Path();
-    holePath.absellipse(0, 1.25, 0.22, 0.22, 0, Math.PI * 2);
-    bladeShape.holes.push(holePath);
-
-    const bladeGeo = new THREE.ExtrudeGeometry(bladeShape, {
-      depth: 0.09,
-      bevelEnabled: true,
-      bevelThickness: 0.022,
-      bevelSize: 0.018,
-      bevelSegments: 4
-    });
-    const blade = new THREE.Mesh(bladeGeo, steelMat);
-    blade.position.set(-1.1, -0.85, -0.045);
-    blade.castShadow = true;
-    group.add(blade);
-
-    // Top collar / socket
-    const collarGeo = new THREE.CylinderGeometry(0.3, 0.26, 0.38, 16);
-    const collar = new THREE.Mesh(collarGeo, brightSteelMat);
-    collar.position.set(0, 0.8, 0);
-    collar.castShadow = true;
-    group.add(collar);
-
-    // Socket inner
-    const socketGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.4, 16);
-    const socket = new THREE.Mesh(socketGeo, steelMat);
-    socket.position.set(0, 0.8, 0);
-    group.add(socket);
-
-    // Stepped collar ring
-    const ringGeo = new THREE.TorusGeometry(0.28, 0.03, 8, 24);
-    const ring = new THREE.Mesh(ringGeo, edgeMat);
-    ring.position.set(0, 0.63, 0);
-    ring.rotation.x = Math.PI / 2;
-    group.add(ring);
-
-    // Blade-to-collar neck
-    const neckGeo = new THREE.BoxGeometry(1.7, 0.09, 0.09);
-    const neck = new THREE.Mesh(neckGeo, brightSteelMat);
-    neck.position.set(0, 0.62, 0);
-    group.add(neck);
-
-    // Handle
-    const handleGeo = new THREE.CylinderGeometry(0.075, 0.068, 3.4, 12);
-    const handle = new THREE.Mesh(handleGeo, woodMat);
-    handle.position.set(0, -0.9, 0);
-    handle.castShadow = true;
-    group.add(handle);
-
-    // Handle grain detail bands
-    for (let i = 0; i < 5; i++) {
-      const bandGeo = new THREE.TorusGeometry(0.076, 0.005, 6, 20);
-      const band = new THREE.Mesh(bandGeo, woodDarkMat);
-      band.position.set(0, -0.3 - i * 0.55, 0);
-      band.rotation.x = Math.PI / 2;
-      group.add(band);
-    }
-
-    // Handle end cap
-    const capGeo = new THREE.SphereGeometry(0.082, 10, 10);
-    const cap = new THREE.Mesh(capGeo, woodDarkMat);
-    cap.position.set(0, -2.6, 0);
-    group.add(cap);
-
-    // Blade edge highlight (polished bevel line)
-    const bevelGeo = new THREE.BoxGeometry(2.2, 0.03, 0.005);
-    const bevel = new THREE.Mesh(bevelGeo, edgeMat);
-    bevel.position.set(0, -0.84, 0.047);
-    group.add(bevel);
-
-    group.rotation.x = -0.15;
-    group.position.y = 0.2;
-    return group;
-  }
-
-  // ── SHOVEL MODEL ───────────────────────────────────────────────────────────
-  function buildShovel() {
-    const group = new THREE.Group();
-
-    // Blade — rounded square shovel
-    const bladeShape = new THREE.Shape();
-    bladeShape.moveTo(-0.9, 0);
-    bladeShape.lineTo(0.9, 0);
-    bladeShape.lineTo(0.88, 1.3);
-    bladeShape.quadraticCurveTo(0.5, 1.65, 0, 1.7);
-    bladeShape.quadraticCurveTo(-0.5, 1.65, -0.88, 1.3);
-    bladeShape.closePath();
-
-    const bladeGeo = new THREE.ExtrudeGeometry(bladeShape, {
-      depth: 0.08,
-      bevelEnabled: true,
-      bevelThickness: 0.025,
-      bevelSize: 0.016,
-      bevelSegments: 4
-    });
-    const blade = new THREE.Mesh(bladeGeo, steelMat);
-    blade.position.set(-0.9, -0.82, -0.04);
-    blade.castShadow = true;
-    group.add(blade);
-
-    // Tread — top of blade reinforcement bar
-    const treadGeo = new THREE.BoxGeometry(1.8, 0.07, 0.14);
-    const tread = new THREE.Mesh(treadGeo, brightSteelMat);
-    tread.position.set(0, 0.68, 0.04);
-    group.add(tread);
-
-    // Tread end caps
-    const tcGeo = new THREE.BoxGeometry(0.07, 0.07, 0.14);
-    [-0.9, 0.9].forEach(x => {
-      const tc = new THREE.Mesh(tcGeo, edgeMat);
-      tc.position.set(x, 0.68, 0.04);
-      group.add(tc);
-    });
-
-    // Socket neck (D-shaped top collar)
-    const neckGeo = new THREE.CylinderGeometry(0.18, 0.22, 0.55, 14);
-    const neck = new THREE.Mesh(neckGeo, brightSteelMat);
-    neck.position.set(0, 1.05, 0);
-    group.add(neck);
-
-    // Socket collar ring
-    const sRingGeo = new THREE.TorusGeometry(0.2, 0.025, 8, 20);
-    const sRing = new THREE.Mesh(sRingGeo, edgeMat);
-    sRing.position.set(0, 0.78, 0);
-    sRing.rotation.x = Math.PI / 2;
-    group.add(sRing);
-
-    // Handle
-    const handleGeo = new THREE.CylinderGeometry(0.072, 0.065, 3.2, 12);
-    const handle = new THREE.Mesh(handleGeo, woodMat);
-    handle.position.set(0, -0.7, 0);
-    handle.castShadow = true;
-    group.add(handle);
-
-    // Wood grain bands
-    for (let i = 0; i < 4; i++) {
-      const bGeo = new THREE.TorusGeometry(0.073, 0.005, 6, 20);
-      const b = new THREE.Mesh(bGeo, woodDarkMat);
-      b.position.set(0, -0.15 - i * 0.65, 0);
-      b.rotation.x = Math.PI / 2;
-      group.add(b);
-    }
-
-    // D-grip at end
-    const gripBarGeo = new THREE.CylinderGeometry(0.045, 0.045, 0.52, 10);
-    const gripBar = new THREE.Mesh(gripBarGeo, woodDarkMat);
-    gripBar.position.set(0, -2.26, 0);
-    gripBar.rotation.z = Math.PI / 2;
-    group.add(gripBar);
-
-    const gripLeftGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.32, 10);
-    const gripLeft = new THREE.Mesh(gripLeftGeo, woodDarkMat);
-    gripLeft.position.set(-0.26, -2.1, 0);
-    gripLeft.rotation.z = 0.5;
-    group.add(gripLeft);
-
-    const gripRightGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.32, 10);
-    const gripRight = new THREE.Mesh(gripRightGeo, woodDarkMat);
-    gripRight.position.set(0.26, -2.1, 0);
-    gripRight.rotation.z = -0.5;
-    group.add(gripRight);
-
-    // Polished blade edge
-    const edgeGeo = new THREE.BoxGeometry(1.8, 0.025, 0.005);
-    const edgeMesh = new THREE.Mesh(edgeGeo, edgeMat);
-    edgeMesh.position.set(0, -0.81, 0.044);
-    group.add(edgeMesh);
-
-    group.rotation.x = -0.15;
-    group.position.y = 0.1;
-    return group;
-  }
-
-  // ── SPADE MODEL ────────────────────────────────────────────────────────────
-  function buildSpade() {
-    const group = new THREE.Group();
-
-    // Diamond / pointed spade blade
-    const bladeShape = new THREE.Shape();
-    bladeShape.moveTo(0, -1.0);
-    bladeShape.quadraticCurveTo(0.85, -0.1, 0.82, 0.82);
-    bladeShape.lineTo(0.78, 1.45);
-    bladeShape.lineTo(-0.78, 1.45);
-    bladeShape.lineTo(-0.82, 0.82);
-    bladeShape.quadraticCurveTo(-0.85, -0.1, 0, -1.0);
-    bladeShape.closePath();
-
-    const bladeGeo = new THREE.ExtrudeGeometry(bladeShape, {
-      depth: 0.085,
-      bevelEnabled: true,
-      bevelThickness: 0.02,
-      bevelSize: 0.015,
-      bevelSegments: 5
-    });
-    const blade = new THREE.Mesh(bladeGeo, steelMat);
-    blade.position.set(-0.82, -0.65, -0.0425);
-    blade.castShadow = true;
-    group.add(blade);
-
-    // Blade center rib (reinforcement ridge)
-    const ribGeo = new THREE.BoxGeometry(0.05, 2.1, 0.04);
-    const rib = new THREE.Mesh(ribGeo, brightSteelMat);
-    rib.position.set(0, 0.4, 0.065);
-    group.add(rib);
-
-    // Rib taper top
-    const ribTopGeo = new THREE.ConeGeometry(0.04, 0.2, 6);
-    const ribTop = new THREE.Mesh(ribTopGeo, brightSteelMat);
-    ribTop.position.set(0, 1.5, 0.065);
-    group.add(ribTop);
-
-    // Rib taper bottom point
-    const ribBotGeo = new THREE.ConeGeometry(0.04, 0.3, 6);
-    const ribBot = new THREE.Mesh(ribBotGeo, brightSteelMat);
-    ribBot.position.set(0, -0.65, 0.065);
-    ribBot.rotation.z = Math.PI;
-    group.add(ribBot);
-
-    // Top socket
-    const socketGeo = new THREE.CylinderGeometry(0.19, 0.22, 0.52, 14);
-    const socket = new THREE.Mesh(socketGeo, brightSteelMat);
-    socket.position.set(0, 1.9, 0);
-    group.add(socket);
-
-    // Socket ring accent
-    const sRingGeo = new THREE.TorusGeometry(0.21, 0.022, 8, 22);
-    const sRing = new THREE.Mesh(sRingGeo, edgeMat);
-    sRing.position.set(0, 1.66, 0);
-    sRing.rotation.x = Math.PI / 2;
-    group.add(sRing);
-
-    // Transition plate (blade to socket)
-    const transGeo = new THREE.BoxGeometry(1.56, 0.08, 0.09);
-    const trans = new THREE.Mesh(transGeo, brightSteelMat);
-    trans.position.set(0, 1.62, 0);
-    group.add(trans);
-
-    // Handle
-    const handleGeo = new THREE.CylinderGeometry(0.07, 0.063, 2.8, 12);
-    const handle = new THREE.Mesh(handleGeo, woodMat);
-    handle.position.set(0, 3.05, 0);
-    handle.castShadow = true;
-    group.add(handle);
-
-    // Grain bands
-    for (let i = 0; i < 4; i++) {
-      const bGeo = new THREE.TorusGeometry(0.071, 0.005, 6, 20);
-      const b = new THREE.Mesh(bGeo, woodDarkMat);
-      b.position.set(0, 2.25 + i * 0.5, 0);
-      b.rotation.x = Math.PI / 2;
-      group.add(b);
-    }
-
-    // Handle end cap
-    const capGeo = new THREE.SphereGeometry(0.08, 10, 10);
-    const cap = new THREE.Mesh(capGeo, woodDarkMat);
-    cap.position.set(0, 4.48, 0);
-    group.add(cap);
-
-    // Polished blade tip highlight
-    const tipGeo = new THREE.ConeGeometry(0.06, 0.22, 8);
-    const tip = new THREE.Mesh(tipGeo, edgeMat);
-    tip.position.set(0, -1.01, 0.042);
-    tip.rotation.z = Math.PI;
-    group.add(tip);
-
-    group.rotation.x = -0.15;
-    group.position.y = -1.0;
-    return group;
-  }
-
-  // Build all tool groups
-  const tools = [buildHoe(), buildShovel(), buildSpade()];
-  const toolData = [
-    { name: 'Hoe Round Eye', spec: 'Available: 1 – 5 LB', badge: 'Bestseller' },
-    { name: 'Round Shovel', spec: 'Available: 1 – 3 KG', badge: 'Popular' },
-    { name: 'Pointed Spade', spec: 'Available: 1000–1600 GM', badge: 'Heavy Duty' }
-  ];
-
-  let current = 0;
-  let targetTool = 0;
-  let transitioning = false;
-
-  tools.forEach((t, i) => {
-    scene.add(t);
-    t.visible = (i === 0);
-  });
-
-  // Mouse / touch drag
-  let isDragging = false;
-  let prevX = 0;
-  let autoRotateSpeed = 0.006;
-  let userRotY = 0;
-  let momentum = 0;
-
-  canvas.addEventListener('mousedown', e => { isDragging = true; prevX = e.clientX; momentum = 0; });
-  window.addEventListener('mouseup', () => { isDragging = false; });
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    const dx = e.clientX - prevX;
-    userRotY += dx * 0.012;
-    momentum = dx * 0.012;
-    prevX = e.clientX;
-  });
-
-  canvas.addEventListener('touchstart', e => { isDragging = true; prevX = e.touches[0].clientX; momentum = 0; });
-  window.addEventListener('touchend', () => { isDragging = false; });
-  window.addEventListener('touchmove', e => {
-    if (!isDragging) return;
-    const dx = e.touches[0].clientX - prevX;
-    userRotY += dx * 0.012;
-    momentum = dx * 0.012;
-    prevX = e.touches[0].clientX;
-  });
-
-  // Switch tool
-  let switchProgress = 1;
-  let switchDir = 1;
-
-  window.switchTool = function(index, btn) {
-    if (index === current || transitioning) return;
-    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    targetTool = index;
-    transitioning = true;
-    switchProgress = 0;
-    switchDir = index > current ? 1 : -1;
-  };
-
-  // Animation
-  let time = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-    time += 0.016;
-
-    if (!isDragging) {
-      momentum *= 0.95;
-      userRotY += momentum;
-      userRotY += autoRotateSpeed;
-    }
-
-    if (transitioning) {
-      switchProgress += 0.04;
-      if (switchProgress < 0.5) {
-        // Fade out current
-        tools[current].scale.set(
-          1 - switchProgress * 1.6,
-          1 - switchProgress * 1.6,
-          1 - switchProgress * 1.6
-        );
-        tools[current].position.x = switchDir * switchProgress * 3;
-      } else if (switchProgress < 0.55) {
-        // Swap
-        tools[current].visible = false;
-        tools[current].scale.set(1, 1, 1);
-        tools[current].position.x = 0;
-        current = targetTool;
-        tools[current].visible = true;
-        tools[current].scale.set(0.1, 0.1, 0.1);
-        tools[current].position.x = -switchDir * 3;
-        // Update label
-        document.getElementById('tool-name').textContent = toolData[current].name;
-        document.getElementById('tool-spec').textContent = toolData[current].spec;
-        document.getElementById('tool-badge').textContent = toolData[current].badge;
-      } else if (switchProgress < 1.0) {
-        // Fade in new
-        const p = (switchProgress - 0.55) / 0.45;
-        tools[current].scale.set(p, p, p);
-        tools[current].position.x = -switchDir * 3 * (1 - p);
-      } else {
-        tools[current].scale.set(1, 1, 1);
-        tools[current].position.x = 0;
-        transitioning = false;
-      }
-    }
-
-    // Subtle float
-    tools[current].position.y = (tools[current] === tools[0] ? 0.2 :
-                                   tools[current] === tools[1] ? 0.1 : -1.0)
-                                   + Math.sin(time * 0.8) * 0.06;
-
-    // Rotate on Y
-    tools[current].rotation.y = userRotY;
-
-    renderer.render(scene, camera);
-  }
-  animate();
-})();
-</script>
 </body>
 </html>

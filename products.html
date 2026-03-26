@@ -13,18 +13,20 @@
   padding: 0 8%;
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   position: sticky; top: 72px; z-index: 99;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .filter-btn {
-  padding: 14px 20px;
+  padding: 14px 16px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--gray); background: transparent; border: none; cursor: pointer;
   border-bottom: 3px solid transparent; transition: all 0.2s;
-  white-space: nowrap;
+  white-space: nowrap; flex-shrink: 0;
 }
 .filter-btn:hover, .filter-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
 
-/* ── CATALOGUE SECTION ── */
+/* ── CATALOGUE BANNER ── */
 .catalogue-banner {
   background: var(--black);
   padding: 48px 8%;
@@ -39,10 +41,27 @@
 .catalogue-banner-desc { font-size: 14px; color: rgba(255,255,255,0.55); font-weight: 300; }
 .catalogue-btns { display: flex; gap: 12px; flex-shrink: 0; }
 
-.pdf-embed-section {margin: 40px auto; padding: 40px; background: var(--bg2); margin-left: auto; margin-right: auto; }
-.pdf-embed-title {margin-left: 290px; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
-.pdf-embed-title::before { content: ''; width: 24px; height: 3px; background: var(--orange); }
-.pdf-viewer { width: 60%; max-width: 1000px; height: 780px; border: 1.5px solid var(--border); background: var(--white); border-radius: 12px; display: block; margin: 0 auto;}
+/* ── PDF EMBED ── */
+.pdf-embed-section {
+  background: var(--bg2);
+  padding: 48px 8%;
+}
+.pdf-embed-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 700; text-transform: uppercase;
+  color: var(--black); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.pdf-embed-title::before { content: ''; width: 24px; height: 3px; background: var(--orange); flex-shrink: 0; }
+.pdf-viewer {
+  width: 100%;
+  max-width: 900px;
+  height: 700px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: block;
+  margin: 0 auto;
+}
 
 /* ── PRODUCT CATEGORIES ── */
 .product-section { padding: 80px 8%; }
@@ -53,23 +72,11 @@
 .product-count { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); font-weight: 600; }
 
 .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.product-card {
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  overflow: hidden;
-  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
-  position: relative;
-}
+.product-card { background: var(--white); border: 1.5px solid var(--border); overflow: hidden; transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s; position: relative; }
 .product-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: #d0d0d0; }
-.product-card-img {
-  height: 180px;
-  background: var(--bg2);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-}
-.product-card-img svg { transition: transform 0.35s; opacity: 0.2; }
-.product-card:hover .product-card-img svg { transform: scale(1.08); opacity: 0.32; }
+.product-card-img { height: 180px; background: var(--bg2); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .product-card-img-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.product-card-img-inner img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .product-card-tag { position: absolute; top: 10px; right: 10px; background: var(--orange); color: var(--white); font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; }
 .product-card-body { padding: 20px 18px; }
 .product-card-name { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 6px; line-height: 1.1; }
@@ -93,14 +100,61 @@
 .custom-form-wrap { background: var(--white); padding: 36px 32px; }
 .custom-form-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 24px; }
 
+/* ── RESPONSIVE ── */
 @media (max-width: 1000px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
+
 @media (max-width: 780px) {
   .products-grid { grid-template-columns: 1fr 1fr; }
   .custom-order { grid-template-columns: 1fr; }
-  .catalogue-banner { grid-template-columns: 1fr; }
-  .pdf-viewer { height: 500px; }
+
+  /* Catalogue banner stacks vertically */
+  .catalogue-banner {
+    grid-template-columns: 1fr;
+    padding: 32px 5%;
+    gap: 24px;
+  }
+  .catalogue-btns {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .catalogue-btns .btn {
+    flex: 1;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  /* PDF embed – shorter height on tablet */
+  .pdf-embed-section { padding: 32px 5%; }
+  .pdf-viewer { height: 480px; }
+  .pdf-embed-title { font-size: 18px; margin-bottom: 16px; }
 }
-@media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
+
+@media (max-width: 500px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .filter-bar { padding: 0 4%; }
+
+  /* Catalogue banner mobile */
+  .catalogue-banner { padding: 24px 5%; }
+  .catalogue-banner-title { font-size: 26px; }
+  .catalogue-banner-desc { font-size: 13px; }
+  .catalogue-btns { flex-direction: column; }
+  .catalogue-btns .btn { width: 100%; text-align: center; }
+
+  /* PDF embed – compact on phone */
+  .pdf-embed-section { padding: 20px 4%; }
+  .pdf-viewer { height: 380px; }
+  .pdf-embed-title { font-size: 16px; }
+
+  /* Product section */
+  .product-section { padding: 48px 5%; }
+  .product-section-title { font-size: 32px; }
+
+  /* Custom order */
+  .custom-order { padding: 48px 5%; }
+  .custom-form-wrap { padding: 24px 18px; }
+  .custom-features { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -117,14 +171,37 @@
     <li><a href="gallery.html">Gallery</a></li>
     <li class="nav-cta"><a href="contact.html">Contact Us</a></li>
   </ul>
-  <div class="nav-toggle" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
-<div class="nav-mobile" id="mobileNav">
-  <a href="index.html">Home</a>
-  <a href="about.html">About Us</a>
-  <a href="products.html" class="active">Products</a>
-  <a href="gallery.html">Gallery</a>
-  <a href="contact.html">Contact Us</a>
+
+<div class="nav-mobile-overlay" id="mobileNavOverlay">
+  <div class="nav-mobile-backdrop"></div>
+  <div class="nav-mobile-panel">
+    <div class="nav-mobile-header">
+      <div class="nav-logo-text"><strong>Nirvana Tools</strong><span>India Pvt. Ltd.</span></div>
+      <button class="nav-mobile-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+    <div class="nav-mobile-contact">
+      <div class="nav-mobile-contact-label">Quick Contact</div>
+      <a href="tel:+919925589060" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11z"/></svg>
+        +91 99255 89060
+      </a>
+      <a href="mailto:nirvanatoolspvtltd@gmail.com" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        nirvanatoolspvtltd@gmail.com
+      </a>
+    </div>
+    <div class="nav-mobile-cta"><a href="contact.html">Contact Us →</a></div>
+  </div>
 </div>
 
 <div class="page-header">
@@ -158,9 +235,8 @@
 <!-- PDF EMBED -->
 <div class="pdf-embed-section" id="pdf-embed">
   <div class="pdf-embed-title">Nirvana Tools Catalogue</div>
-  <iframe class="pdf-viewer" src="NIRVANA_CATLOUGE.pdf#zoom=250" title="Nirvana Tools Catalogue"></iframe>
+  <iframe class="pdf-viewer" src="NIRVANA_CATLOUGE.pdf#zoom=page-fit" title="Nirvana Tools Catalogue" loading="lazy"></iframe>
 </div>
-
 
 <!-- MARQUEE -->
 <div class="marquee-strip">
@@ -199,297 +275,89 @@
       <div class="section-eyebrow"><span></span><p>Category 01</p></div>
       <div class="product-section-title">Agricultural <em>Hoes</em></div>
     </div>
-    <div class="product-count">20+ Variants Available</div>
+    <div class="product-count">28+ Variants Available</div>
   </div>
   <div class="products-grid" data-stagger>
-
-    <!-- HOE ROUND EYE -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <img src="hoe-round-eye.png" alt="Hoe Round Eye Tool" class="product-image">
-        </div>
-        <span class="product-card-tag">Bestseller</span>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Hoe Round Eye</div>
-        <div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 · 4.25 LB</div>
-        <div class="product-card-unit">Unit: Pounds (LB)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-round-eye.png" alt="Hoe Round Eye"/></div><span class="product-card-tag">Bestseller</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye</div><div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 · 4.25 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-
-    <!-- HOE SUNKEN EYE -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="hoe-sunken-eye.png" alt="Hoe Sunken Eye" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-sunken-eye.png" alt="Hoe Sunken Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Sunken Eye</div><div class="product-card-range">2 · 2.25 · 2.50 · 2.75 · 3 · 3.50 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Sunken Eye</div>
-    <div class="product-card-range">2 · 2.25 · 2.50 · 2.75 · 3 · 3.50 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE D-SHAPED ROUND EYE -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="hoe-d-shaped-round-eye.png" alt="Hoe D-Shaped Round Eye" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-d-shaped-round-eye.png" alt="Hoe D-Shaped Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe D-Shaped Round Eye</div><div class="product-card-range">1 · 2 · 3 · 4 · 5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe D-Shaped Round Eye</div>
-    <div class="product-card-range">1 · 2 · 3 · 4 · 5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE SQUARE TAPER ROUND EYE -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-square-taper-round-eye.png" alt="Hoe Square Taper Round Eye With Head" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-square-taper-round-eye.png" alt="Hoe Square Taper Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Square Taper Round Eye With Head</div><div class="product-card-range">1.5 · 1.75 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Square Taper Round Eye With Head</div>
-    <div class="product-card-range">1.5 · 1.75 · 2 · 2.5 · 3 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- SQUARE HOE ROUND EYE WITH HEAD -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/square-hoe-round-eye.png" alt="Square Hoe Round Eye With Head" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-hoe-round-eye.png" alt="Square Hoe Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Square Hoe Round Eye With Head</div><div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Square Hoe Round Eye With Head</div>
-    <div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE ROUND EYE PR -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-round-eye-pr.png" alt="Hoe Round Eye PR" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-round-eye-pr.png" alt="Hoe Round Eye PR"/></div><span class="product-card-tag">PR</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye PR</div><div class="product-card-range">1 · 2 · 3 · 4 · 5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-    <span class="product-card-tag">PR</span>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Round Eye PR</div>
-    <div class="product-card-range">1 · 2 · 3 · 4 · 5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE SUNKEY EYE -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-sunkey-eye.png" alt="Hoe Sunkey Eye" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-sunkey-eye.png" alt="Hoe Sunkey Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Sunkey Eye</div><div class="product-card-range">3 · 3.5 · 3.75 · 4 · 4.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Sunkey Eye</div>
-    <div class="product-card-range">3 · 3.5 · 3.75 · 4 · 4.5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE ROUND EYE REINFORCED -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-reinforced-blade.png" alt="Hoe Round Eye Reinforced Blade" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-reinforced-blade.png" alt="Hoe Reinforced Blade"/></div><span class="product-card-tag">Heavy</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye Reinforced Blade</div><div class="product-card-range">900 · 1100 · 1300 · 1500 · 1700 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-    <span class="product-card-tag">Heavy</span>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Round Eye Reinforced Blade</div>
-    <div class="product-card-range">900 · 1100 · 1300 · 1500 · 1700 GM</div>
-    <div class="product-card-unit">Unit: Grams (GM)</div>
-  </div>
-</div>
-
-<!-- HOE CURVED -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-curved.png" alt="Hoe Round Eye Curved" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-curved.png" alt="Hoe Curved"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye Curved</div><div class="product-card-range">800 · 900 · 990 · 1000 · 1050 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Round Eye Curved</div>
-    <div class="product-card-range">800 · 900 · 990 · 1000 · 1050 GM</div>
-    <div class="product-card-unit">Unit: Grams (GM)</div>
-  </div>
-</div>
-
-<!-- HOE SMALL -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-small-round-eye.png" alt="Hoe Small Round Eye" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-small-round-eye.png" alt="Hoe Small Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Small Round Eye</div><div class="product-card-range">1.5 · 1.75 · 2 · 3 · 3.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Small Round Eye</div>
-    <div class="product-card-range">1.5 · 1.75 · 2 · 3 · 3.5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE FLAT -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-flat-with-head.png" alt="Hoe Round Eye Flat With Head" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-flat-with-head.png" alt="Hoe Flat With Head"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye Flat With Head</div><div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Round Eye Flat With Head</div>
-    <div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE CUT -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-cut-eye.png" alt="Hoe Cut Eye With Head" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-cut-eye.png" alt="Hoe Cut Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Cut Eye With Head</div><div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Cut Eye With Head</div>
-    <div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- BENDING HOE -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/bending-hoe.png" alt="Bending Hoe With Head" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="bending-hoe.png" alt="Bending Hoe"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Bending Hoe With Head</div><div class="product-card-range">3 · 3.5 · 4 · 4.5 · 5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Bending Hoe With Head</div>
-    <div class="product-card-range">3 · 3.5 · 4 · 4.5 · 5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HALF MOON -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-half-moon.png" alt="Hoe Half Moon Round Eye" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-half-moon.png" alt="Hoe Half Moon"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Half Moon Round Eye</div><div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Half Moon Round Eye</div>
-    <div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE FR -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-fr.png" alt="Hoe FR" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-fr.png" alt="Hoe FR"/></div><span class="product-card-tag">FR</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe FR</div><div class="product-card-range">12 · 14 · 16 · 18 · 20 CM</div><div class="product-card-unit">Unit: Centimeters (CM)</div></div>
     </div>
-    <span class="product-card-tag">FR</span>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe FR</div>
-    <div class="product-card-range">12 · 14 · 16 · 18 · 20 CM</div>
-    <div class="product-card-unit">Unit: Centimeters (CM)</div>
-  </div>
-</div>
-
-<!-- TRIANGULAR -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-triangular.png" alt="Hoe Triangular" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-triangular.png" alt="Hoe Triangular"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Triangular</div><div class="product-card-range">375 · 575 · 675 · 757 · 875 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Triangular</div>
-    <div class="product-card-range">375 · 575 · 675 · 757 · 875 GM</div>
-    <div class="product-card-unit">Unit: Grams (GM)</div>
-  </div>
-</div>
-
-<!-- HOE HEAVY -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-heavy.png" alt="Hoe Heavy" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-heavy.png" alt="Hoe Heavy"/></div><span class="product-card-tag">Heavy</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Heavy</div><div class="product-card-range">650 · 950 · 1050 · 1250 · 1450 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-    <span class="product-card-tag">Heavy</span>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Heavy</div>
-    <div class="product-card-range">650 · 950 · 1050 · 1250 · 1450 GM</div>
-    <div class="product-card-unit">Unit: Grams (GM)</div>
-  </div>
-</div>
-
-<!-- MAMOOTY -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/mamooty.png" alt="Mamooty" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="mamooty.png" alt="Mamooty"/></div><span class="product-card-tag">Special</span></div>
+      <div class="product-card-body"><div class="product-card-name">Mamooty</div><div class="product-card-range">6 · 7 · 8 · 9 · 10 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-    <span class="product-card-tag">Special</span>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Mamooty</div>
-    <div class="product-card-range">6 · 7 · 8 · 9 · 10 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- ROMANIAN -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/romanian-hoe.png" alt="Romanian Hoe" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="romanian-hoe.png" alt="Romanian Hoe"/></div><span class="product-card-tag">Romanian</span></div>
+      <div class="product-card-body"><div class="product-card-name">Romanian Hoe</div><div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
-    <span class="product-card-tag">Romanian</span>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Romanian Hoe</div>
-    <div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
-<!-- HOE RAISED EYE -->
-<div class="product-card">
-  <div class="product-card-img">
-    <div class="product-card-img-inner">
-      <img src="images/hoe-raised-eye.png" alt="Hoe Raised Eye" class="product-image">
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-square-eye.png" alt="Hoe Square Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Square Eye</div><div class="product-card-range">500 · 550 · 700 · 750 · 900 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-  </div>
-  <div class="product-card-body">
-    <div class="product-card-name">Hoe Raised Eye</div>
-    <div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 LB</div>
-    <div class="product-card-unit">Unit: Pounds (LB)</div>
-  </div>
-</div>
-
   </div>
   <hr class="product-divider"/>
 </div>
@@ -501,57 +369,20 @@
       <div class="section-eyebrow"><span></span><p>Category 02</p></div>
       <div class="product-section-title"><em>Scrapers</em></div>
     </div>
-    <div class="product-count">4 Variants Available</div>
+    <div class="product-count">3 Variants Available</div>
   </div>
   <div class="products-grid" data-stagger>
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M30 12 L90 12 L80 80 L40 80 Z" fill="#2E2E2E"/><path d="M38 78 L82 78 L84 86 L36 86 Z" fill="#aaa"/><rect x="54" y="86" width="12" height="69" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Scraper Curved</div>
-        <div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div>
-        <div class="product-card-unit">Unit: Pounds (LB)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="scraper-curved.png" alt="Scraper Curved"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Scraper Curved</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M38 14 L82 14 L76 72 L44 72 Z" fill="#2E2E2E"/><path d="M42 70 L78 70 L80 78 L40 78 Z" fill="#aaa"/><rect x="54" y="78" width="12" height="77" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Scraper Small</div>
-        <div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div>
-        <div class="product-card-unit">Unit: Pounds (LB)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="scraper-small.png" alt="Scraper Small"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Scraper Small</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M10 46 Q60 12 110 46 L105 80 L15 80 Z" fill="#2E2E2E"/><rect x="52" y="12" width="16" height="36" rx="4" fill="#2E2E2E"/><path d="M15 78 L105 78 L107 86 L13 86 Z" fill="#aaa"/><rect x="54" y="86" width="12" height="69" rx="6" fill="#555"/></svg>
-        </div>
-        <span class="product-card-tag">Large</span>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Scraper Large Eye</div>
-        <div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div>
-        <div class="product-card-unit">Unit: Pounds (LB)</div>
-      </div>
-    </div>
-    <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M40 14 Q60 6 80 14 L84 70 L36 70 Z" fill="#2E2E2E" opacity="0.85"/><rect x="54" y="70" width="12" height="85" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Scraper (Inline)</div>
-        <div class="product-card-range">Various sizes available</div>
-        <div class="product-card-unit">Contact for specifications</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="scraper-large-eye.png" alt="Scraper Large Eye"/></div><span class="product-card-tag">Large</span></div>
+      <div class="product-card-body"><div class="product-card-name">Scraper Large Eye</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
     </div>
   </div>
 </div>
@@ -563,196 +394,61 @@
       <div class="section-eyebrow"><span></span><p>Category 03</p></div>
       <div class="product-section-title">Spades &amp; <em>Shovels</em></div>
     </div>
-    <div class="product-count">15+ Variants Available</div>
+    <div class="product-count">18+ Variants Available</div>
   </div>
   <div class="products-grid" data-stagger>
-
-    <!-- SPADE BENT -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M60 14 L98 56 L60 98 L22 56 Z" fill="#2E2E2E"/><rect x="54" y="98" width="12" height="57" rx="6" fill="#555"/><path d="M96 54 L102 60 L60 101 L18 60 L24 54 Z" fill="#aaa"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Spade Bent</div>
-        <div class="product-card-range">1300 · 1350 · 1400 · 1450 · 1500 GM</div>
-        <div class="product-card-unit">Unit: Grams (GM)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="spade-bent.png" alt="Spade Bent"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Spade Bent</div><div class="product-card-range">1300 · 1350 · 1400 · 1450 · 1500 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-
-    <!-- SPADE ROUND POINT -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M38 14 L82 14 L92 72 L60 98 L28 72 Z" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M28 70 L92 70 L94 78 L26 78 Z" fill="#aaa"/><rect x="54" y="78" width="12" height="77" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Spade Round Point</div>
-        <div class="product-card-range">1000 · 1200 · 1300 · 1400 · 1500 GM</div>
-        <div class="product-card-unit">Unit: Grams (GM)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="spade-round-point.png" alt="Spade Round Point"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Spade Round Point</div><div class="product-card-range">1000 · 1200 · 1300 · 1400 · 1500 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-
-    <!-- SQUARE SPADE -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M28 14 L92 14 L96 72 L24 72 Z" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M24 70 L96 70 L98 78 L22 78 Z" fill="#aaa"/><rect x="54" y="78" width="12" height="77" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Square Spade</div>
-        <div class="product-card-range">1200 · 1300 · 1400 · 1500 · 1600 GM</div>
-        <div class="product-card-unit">Unit: Grams (GM)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-spade.png" alt="Square Spade"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Square Spade</div><div class="product-card-range">1200 · 1300 · 1400 · 1500 · 1600 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-
-    <!-- TRIANGULAR SPADE -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M38 14 L82 14 L90 70 L60 96 L30 70 Z" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M30 68 L90 68 L92 76 L28 76 Z" fill="#aaa"/><rect x="54" y="76" width="12" height="79" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Triangular Spade</div>
-        <div class="product-card-range">1200 · 1300 · 1400 · 1500 · 1600 GM</div>
-        <div class="product-card-unit">Unit: Grams (GM)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="triangular-spade.png" alt="Triangular Spade"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Triangular Spade</div><div class="product-card-range">1200 · 1300 · 1400 · 1500 · 1600 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-
-    <!-- GARDEN SPADE -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><rect x="28" y="14" width="64" height="64" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><rect x="28" y="70" width="64" height="9" fill="#aaa"/><rect x="8" y="79" width="104" height="9" rx="4" fill="#444"/><rect x="54" y="88" width="12" height="67" rx="6" fill="#555"/></svg>
-        </div>
-        <span class="product-card-tag">Garden</span>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Garden Spade</div>
-        <div class="product-card-range">1750 · 1850 · 1950 · 2050 · 2150 GM</div>
-        <div class="product-card-unit">Unit: Grams (GM)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="garden-spade.png" alt="Garden Spade"/></div><span class="product-card-tag">Garden</span></div>
+      <div class="product-card-body"><div class="product-card-name">Garden Spade</div><div class="product-card-range">1750 · 1850 · 1950 · 2050 · 2150 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
     </div>
-
-    <!-- DRAIN SPADE -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M46 14 L74 14 L80 80 L60 95 L40 80 Z" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><rect x="54" y="95" width="12" height="60" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Drain Spade</div>
-        <div class="product-card-range">1.0 · 1.2 · 1.4 · 1.6 · 1.8 IN</div>
-        <div class="product-card-unit">Unit: Inches (width)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="drain-spade.png" alt="Drain Spade"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Drain Spade</div><div class="product-card-range">1.0 · 1.2 · 1.4 · 1.6 · 1.8 IN</div><div class="product-card-unit">Unit: Inches (width)</div></div>
     </div>
-
-    <!-- SQUARE TREADED SHOVEL -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><rect x="28" y="14" width="64" height="60" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><rect x="28" y="66" width="64" height="9" fill="#aaa"/><rect x="12" y="75" width="96" height="9" rx="4" fill="#444"/><rect x="54" y="84" width="12" height="71" rx="6" fill="#555"/></svg>
-        </div>
-        <span class="product-card-tag">Treaded</span>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Square Treaded Shovel</div>
-        <div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 KG</div>
-        <div class="product-card-unit">Unit: Kilograms (KG)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-treaded-shovel.png" alt="Square Treaded Shovel"/></div><span class="product-card-tag">Treaded</span></div>
+      <div class="product-card-body"><div class="product-card-name">Square Treaded Shovel</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
     </div>
-
-    <!-- ROUND TREADED SHOVEL -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M36 14 L84 14 L92 60 L60 78 L28 60 Z" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M28 58 L92 58 L94 66 L26 66 Z" fill="#aaa"/><rect x="10" y="66" width="100" height="9" rx="4" fill="#444"/><rect x="54" y="75" width="12" height="80" rx="6" fill="#555"/></svg>
-        </div>
-        <span class="product-card-tag">Treaded</span>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Round Treaded Shovel</div>
-        <div class="product-card-range">1.0 · 1.25 · 1.55 · 1.75 · 2 KG</div>
-        <div class="product-card-unit">Unit: Kilograms (KG)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="round-treaded-shovel.png" alt="Round Treaded Shovel"/></div><span class="product-card-tag">Treaded</span></div>
+      <div class="product-card-body"><div class="product-card-name">Round Treaded Shovel</div><div class="product-card-range">1.0 · 1.25 · 1.55 · 1.75 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
     </div>
-
-    <!-- FLAT SHOVEL -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><rect x="26" y="14" width="68" height="62" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><rect x="26" y="68" width="68" height="10" fill="#bbb"/><rect x="12" y="78" width="96" height="9" rx="4" fill="#444"/><rect x="54" y="87" width="12" height="68" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Flat Shovel</div>
-        <div class="product-card-range">1 · 1.55 · 2 · 2.75 · 2.9 KG</div>
-        <div class="product-card-unit">Unit: Kilograms (KG)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="flat-shovel.png" alt="Flat Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Flat Shovel</div><div class="product-card-range">1 · 1.55 · 2 · 2.75 · 2.9 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
     </div>
-
-    <!-- ROUND MOUTH SHOVEL -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M34 14 L86 14 L92 60 L60 74 L28 60 Z" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M28 58 L92 58 L94 66 L26 66 Z" fill="#aaa"/><rect x="12" y="66" width="96" height="9" rx="4" fill="#444"/><rect x="54" y="75" width="12" height="80" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Round Mouth Shovel</div>
-        <div class="product-card-range">1 · 1.55 · 1.65 · 1.8 · 2 KG</div>
-        <div class="product-card-unit">Unit: Kilograms (KG)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="round-mouth-shovel.png" alt="Round Mouth Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Round Mouth Shovel</div><div class="product-card-range">1 · 1.55 · 1.65 · 1.8 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
     </div>
-
-    <!-- SPOON BLADE SHOVEL -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><ellipse cx="60" cy="36" rx="28" ry="32" fill="#2E2E2E"/><rect x="54" y="68" width="12" height="87" rx="6" fill="#555"/></svg>
-        </div>
-        <span class="product-card-tag">Special</span>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Spoon Blade Shovel</div>
-        <div class="product-card-range">1 · 1.2 · 1.4 · 1.8 · 2 KG</div>
-        <div class="product-card-unit">Unit: Kilograms (KG)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="spoon-blade-shovel.png" alt="Spoon Blade Shovel"/></div><span class="product-card-tag">Special</span></div>
+      <div class="product-card-body"><div class="product-card-name">Spoon Blade Shovel</div><div class="product-card-range">1 · 1.2 · 1.4 · 1.8 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
     </div>
-
-    <!-- SQUARE MOUTH SHOVEL -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><rect x="22" y="14" width="76" height="60" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><rect x="22" y="66" width="76" height="10" fill="#aaa"/><rect x="10" y="76" width="100" height="9" rx="4" fill="#444"/><rect x="54" y="85" width="12" height="70" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Square Mouth Shovel</div>
-        <div class="product-card-range">1.0 · 1.1 · 1.4 · 1.85 · 2 KG</div>
-        <div class="product-card-unit">Unit: Kilograms (KG)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-mouth-shovel.png" alt="Square Mouth Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Square Mouth Shovel</div><div class="product-card-range">1.0 · 1.1 · 1.4 · 1.85 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
     </div>
-
-    <!-- REGOLE SHOVEL -->
     <div class="product-card">
-      <div class="product-card-img">
-        <div class="product-card-img-inner">
-          <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M36 14 L84 14 L88 68 L32 68 Z" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M32 66 L88 66 L90 74 L30 74 Z" fill="#aaa"/><rect x="10" y="74" width="100" height="8" rx="4" fill="#444"/><rect x="54" y="82" width="12" height="73" rx="6" fill="#555"/></svg>
-        </div>
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-name">Regole Shovel</div>
-        <div class="product-card-range">1 · 1.2 · 1.4 · 1.95 · 2 KG</div>
-        <div class="product-card-unit">Unit: Kilograms (KG)</div>
-      </div>
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="regole-shovel.png" alt="Regole Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Regole Shovel</div><div class="product-card-range">1 · 1.2 · 1.4 · 1.95 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
     </div>
-
   </div>
 </div>
 
@@ -778,7 +474,7 @@
     </div>
     <div class="form-group"><label class="form-label">Product &amp; Specifications</label><textarea class="form-textarea" placeholder="Describe what you need — product type, weight/size, quantity…" style="min-height:100px;"></textarea></div>
     <div class="form-group"><label class="form-label">Contact (Phone / Email)</label><input type="text" class="form-input" placeholder="+91 XXXXX or email@example.com"/></div>
-    <button class="btn btn-orange" style="width:100%;border:none;cursor:pointer;">Send Enquiry →</button>
+    <button class="btn btn-orange" style="width:100%;border:none;cursor:pointer;display:block;" onclick="window.location='contact.html'">Send Enquiry →</button>
   </div>
 </div>
 
@@ -832,14 +528,553 @@
 
 <script src="shared.js"></script>
 <script>
-function toggleMobile(){document.getElementById('mobileNav').classList.toggle('open');}
 function filterSection(id, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   if (id === 'all') { window.scrollTo({top: document.querySelector('#hoes').offsetTop - 120, behavior:'smooth'}); return; }
-  const el = document.getElementById(id);
+  if (id === 'catalogue') { document.getElementById('catalogue').scrollIntoView({behavior:'smooth', block:'start'}); return; }
+  var el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  if (id === 'catalogue') { document.getElementById('pdf-embed').scrollIntoView({behavior:'smooth'}); }
+}
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Products — Nirvana Tools India Pvt. Ltd.</title>
+<link rel="stylesheet" href="shared.css"/>
+<style>
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: var(--white);
+  border-bottom: 1.5px solid var(--border);
+  padding: 0 8%;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  position: sticky; top: 72px; z-index: 99;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.filter-btn {
+  padding: 14px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gray); background: transparent; border: none; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: all 0.2s;
+  white-space: nowrap; flex-shrink: 0;
+}
+.filter-btn:hover, .filter-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+/* ── CATALOGUE BANNER ── */
+.catalogue-banner {
+  background: var(--black);
+  padding: 48px 8%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+}
+.catalogue-banner-text { color: var(--white); }
+.catalogue-banner-title { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
+.catalogue-banner-title em { font-style: normal; color: var(--orange); }
+.catalogue-banner-desc { font-size: 14px; color: rgba(255,255,255,0.55); font-weight: 300; }
+.catalogue-btns { display: flex; gap: 12px; flex-shrink: 0; }
+
+/* ── PDF EMBED ── */
+.pdf-embed-section {
+  background: var(--bg2);
+  padding: 48px 8%;
+}
+.pdf-embed-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 700; text-transform: uppercase;
+  color: var(--black); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.pdf-embed-title::before { content: ''; width: 24px; height: 3px; background: var(--orange); flex-shrink: 0; }
+.pdf-viewer {
+  width: 100%;
+  max-width: 900px;
+  height: 700px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: block;
+  margin: 0 auto;
+}
+
+/* ── PRODUCT CATEGORIES ── */
+.product-section { padding: 80px 8%; }
+.product-section + .product-section { padding-top: 0; }
+.product-section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+.product-section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 44px; font-weight: 900; text-transform: uppercase; line-height: 1; }
+.product-section-title em { font-style: normal; color: var(--orange); }
+.product-count { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); font-weight: 600; }
+
+.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.product-card { background: var(--white); border: 1.5px solid var(--border); overflow: hidden; transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s; position: relative; }
+.product-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: #d0d0d0; }
+.product-card-img { height: 180px; background: var(--bg2); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.product-card-img-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.product-card-img-inner img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.product-card-tag { position: absolute; top: 10px; right: 10px; background: var(--orange); color: var(--white); font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; }
+.product-card-body { padding: 20px 18px; }
+.product-card-name { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 6px; line-height: 1.1; }
+.product-card-range { font-size: 12px; color: var(--orange); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.product-card-unit { font-size: 11px; color: var(--gray); letter-spacing: 0.06em; }
+.product-divider { border: none; border-top: 1.5px solid var(--border); margin: 32px 0 0; }
+
+/* ── CUSTOM ORDER ── */
+.custom-order {
+  background: linear-gradient(135deg, var(--black) 0%, #2C1A00 100%);
+  padding: 72px 8%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.custom-order-title { font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; text-transform: uppercase; color: var(--white); line-height: 0.95; margin-bottom: 20px; }
+.custom-order-title em { font-style: normal; color: var(--orange); }
+.custom-order-desc { font-size: 15px; color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.7; margin-bottom: 32px; }
+.custom-features { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.custom-feature { display: flex; align-items: center; gap: 10px; }
+.custom-feature-dot { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; flex-shrink: 0; }
+.custom-feature-text { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 300; }
+.custom-form-wrap { background: var(--white); padding: 36px 32px; }
+.custom-form-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 24px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1000px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
+
+@media (max-width: 780px) {
+  .products-grid { grid-template-columns: 1fr 1fr; }
+  .custom-order { grid-template-columns: 1fr; }
+
+  /* Catalogue banner stacks vertically */
+  .catalogue-banner {
+    grid-template-columns: 1fr;
+    padding: 32px 5%;
+    gap: 24px;
+  }
+  .catalogue-btns {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .catalogue-btns .btn {
+    flex: 1;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  /* PDF embed – shorter height on tablet */
+  .pdf-embed-section { padding: 32px 5%; }
+  .pdf-viewer { height: 480px; }
+  .pdf-embed-title { font-size: 18px; margin-bottom: 16px; }
+}
+
+@media (max-width: 500px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .filter-bar { padding: 0 4%; }
+
+  /* Catalogue banner mobile */
+  .catalogue-banner { padding: 24px 5%; }
+  .catalogue-banner-title { font-size: 26px; }
+  .catalogue-banner-desc { font-size: 13px; }
+  .catalogue-btns { flex-direction: column; }
+  .catalogue-btns .btn { width: 100%; text-align: center; }
+
+  /* PDF embed – compact on phone */
+  .pdf-embed-section { padding: 20px 4%; }
+  .pdf-viewer { height: 380px; }
+  .pdf-embed-title { font-size: 16px; }
+
+  /* Product section */
+  .product-section { padding: 48px 5%; }
+  .product-section-title { font-size: 32px; }
+
+  /* Custom order */
+  .custom-order { padding: 48px 5%; }
+  .custom-form-wrap { padding: 24px 18px; }
+  .custom-features { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="NTI Logo"/>
+    <div class="nav-logo-text"><strong>Nirvana Tools</strong><span>India Pvt. Ltd.</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li class="nav-cta"><a href="contact.html">Contact Us</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-mobile-overlay" id="mobileNavOverlay">
+  <div class="nav-mobile-backdrop"></div>
+  <div class="nav-mobile-panel">
+    <div class="nav-mobile-header">
+      <div class="nav-logo-text"><strong>Nirvana Tools</strong><span>India Pvt. Ltd.</span></div>
+      <button class="nav-mobile-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+    <div class="nav-mobile-contact">
+      <div class="nav-mobile-contact-label">Quick Contact</div>
+      <a href="tel:+919925589060" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11z"/></svg>
+        +91 99255 89060
+      </a>
+      <a href="mailto:nirvanatoolspvtltd@gmail.com" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        nirvanatoolspvtltd@gmail.com
+      </a>
+    </div>
+    <div class="nav-mobile-cta"><a href="contact.html">Contact Us →</a></div>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="page-header-eyebrow"><span></span><p>Our Range</p></div>
+  <h1>Our <em>Products</em></h1>
+  <p class="subtitle">Comprehensive forged steel hand tools for agriculture and industry — 50+ variants across hoes, spades, and shovels.</p>
+  <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span class="current">Products</span></div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterSection('all', this)">All Products</button>
+  <button class="filter-btn" onclick="filterSection('hoes', this)">Hoes</button>
+  <button class="filter-btn" onclick="filterSection('spades', this)">Spades &amp; Shovels</button>
+  <button class="filter-btn" onclick="filterSection('scrapers', this)">Scrapers</button>
+  <button class="filter-btn" onclick="filterSection('catalogue', this)">View Catalogue PDF</button>
+</div>
+
+<!-- CATALOGUE BANNER -->
+<div class="catalogue-banner" id="catalogue">
+  <div class="catalogue-banner-text">
+    <div class="catalogue-banner-title">Download Our <em>Full Catalogue</em></div>
+    <div class="catalogue-banner-desc">Complete product specifications, weight ranges, and ordering information — all in one PDF.</div>
+  </div>
+  <div class="catalogue-btns">
+    <a href="NIRVANA_CATLOUGE.pdf" download class="btn btn-orange">⬇ Download PDF</a>
+    <a href="#pdf-embed" class="btn btn-white">View Online</a>
+  </div>
+</div>
+
+<!-- PDF EMBED -->
+<div class="pdf-embed-section" id="pdf-embed">
+  <div class="pdf-embed-title">Nirvana Tools Catalogue</div>
+  <iframe class="pdf-viewer" src="NIRVANA_CATLOUGE.pdf#zoom=page-fit" title="Nirvana Tools Catalogue" loading="lazy"></iframe>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <div class="marquee-item">Hoe Round Eye<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe Sunken Eye<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe D-Shaped<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe Half Moon<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe Reinforced Blade<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Mamooty<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Romanian Hoe<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Triangular Spade<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Garden Spade<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Square Shovel<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Round Mouth Shovel<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Scraper Curved<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe Round Eye<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe Sunken Eye<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe D-Shaped<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe Half Moon<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Hoe Reinforced Blade<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Mamooty<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Romanian Hoe<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Triangular Spade<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Garden Spade<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Square Shovel<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Round Mouth Shovel<span class="marquee-dot"></span></div>
+    <div class="marquee-item">Scraper Curved<span class="marquee-dot"></span></div>
+  </div>
+</div>
+
+<!-- HOES SECTION -->
+<div class="product-section" id="hoes">
+  <div class="product-section-header fade-up">
+    <div>
+      <div class="section-eyebrow"><span></span><p>Category 01</p></div>
+      <div class="product-section-title">Agricultural <em>Hoes</em></div>
+    </div>
+    <div class="product-count">28+ Variants Available</div>
+  </div>
+  <div class="products-grid" data-stagger>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-round-eye.png" alt="Hoe Round Eye"/></div><span class="product-card-tag">Bestseller</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye</div><div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 · 4.25 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-sunken-eye.png" alt="Hoe Sunken Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Sunken Eye</div><div class="product-card-range">2 · 2.25 · 2.50 · 2.75 · 3 · 3.50 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-d-shaped-round-eye.png" alt="Hoe D-Shaped Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe D-Shaped Round Eye</div><div class="product-card-range">1 · 2 · 3 · 4 · 5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-square-taper-round-eye.png" alt="Hoe Square Taper Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Square Taper Round Eye With Head</div><div class="product-card-range">1.5 · 1.75 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-hoe-round-eye.png" alt="Square Hoe Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Square Hoe Round Eye With Head</div><div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-round-eye-pr.png" alt="Hoe Round Eye PR"/></div><span class="product-card-tag">PR</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye PR</div><div class="product-card-range">1 · 2 · 3 · 4 · 5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-sunkey-eye.png" alt="Hoe Sunkey Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Sunkey Eye</div><div class="product-card-range">3 · 3.5 · 3.75 · 4 · 4.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-reinforced-blade.png" alt="Hoe Reinforced Blade"/></div><span class="product-card-tag">Heavy</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye Reinforced Blade</div><div class="product-card-range">900 · 1100 · 1300 · 1500 · 1700 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-curved.png" alt="Hoe Curved"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye Curved</div><div class="product-card-range">800 · 900 · 990 · 1000 · 1050 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-small-round-eye.png" alt="Hoe Small Round Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Small Round Eye</div><div class="product-card-range">1.5 · 1.75 · 2 · 3 · 3.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-flat-with-head.png" alt="Hoe Flat With Head"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Round Eye Flat With Head</div><div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-cut-eye.png" alt="Hoe Cut Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Cut Eye With Head</div><div class="product-card-range">1.5 · 2 · 2.5 · 3 · 3.5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="bending-hoe.png" alt="Bending Hoe"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Bending Hoe With Head</div><div class="product-card-range">3 · 3.5 · 4 · 4.5 · 5 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-half-moon.png" alt="Hoe Half Moon"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Half Moon Round Eye</div><div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-fr.png" alt="Hoe FR"/></div><span class="product-card-tag">FR</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe FR</div><div class="product-card-range">12 · 14 · 16 · 18 · 20 CM</div><div class="product-card-unit">Unit: Centimeters (CM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-triangular.png" alt="Hoe Triangular"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Triangular</div><div class="product-card-range">375 · 575 · 675 · 757 · 875 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-heavy.png" alt="Hoe Heavy"/></div><span class="product-card-tag">Heavy</span></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Heavy</div><div class="product-card-range">650 · 950 · 1050 · 1250 · 1450 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="mamooty.png" alt="Mamooty"/></div><span class="product-card-tag">Special</span></div>
+      <div class="product-card-body"><div class="product-card-name">Mamooty</div><div class="product-card-range">6 · 7 · 8 · 9 · 10 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="romanian-hoe.png" alt="Romanian Hoe"/></div><span class="product-card-tag">Romanian</span></div>
+      <div class="product-card-body"><div class="product-card-name">Romanian Hoe</div><div class="product-card-range">2 · 3 · 4 · 5 · 6 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="hoe-square-eye.png" alt="Hoe Square Eye"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Hoe Square Eye</div><div class="product-card-range">500 · 550 · 700 · 750 · 900 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+  </div>
+  <hr class="product-divider"/>
+</div>
+
+<!-- SCRAPERS SECTION -->
+<div class="product-section section-alt" id="scrapers" style="padding-top:60px;">
+  <div class="product-section-header fade-up">
+    <div>
+      <div class="section-eyebrow"><span></span><p>Category 02</p></div>
+      <div class="product-section-title"><em>Scrapers</em></div>
+    </div>
+    <div class="product-count">3 Variants Available</div>
+  </div>
+  <div class="products-grid" data-stagger>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="scraper-curved.png" alt="Scraper Curved"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Scraper Curved</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="scraper-small.png" alt="Scraper Small"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Scraper Small</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="scraper-large-eye.png" alt="Scraper Large Eye"/></div><span class="product-card-tag">Large</span></div>
+      <div class="product-card-body"><div class="product-card-name">Scraper Large Eye</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 LB</div><div class="product-card-unit">Unit: Pounds (LB)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SPADES & SHOVELS SECTION -->
+<div class="product-section" id="spades">
+  <div class="product-section-header fade-up">
+    <div>
+      <div class="section-eyebrow"><span></span><p>Category 03</p></div>
+      <div class="product-section-title">Spades &amp; <em>Shovels</em></div>
+    </div>
+    <div class="product-count">18+ Variants Available</div>
+  </div>
+  <div class="products-grid" data-stagger>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="spade-bent.png" alt="Spade Bent"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Spade Bent</div><div class="product-card-range">1300 · 1350 · 1400 · 1450 · 1500 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="spade-round-point.png" alt="Spade Round Point"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Spade Round Point</div><div class="product-card-range">1000 · 1200 · 1300 · 1400 · 1500 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-spade.png" alt="Square Spade"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Square Spade</div><div class="product-card-range">1200 · 1300 · 1400 · 1500 · 1600 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="triangular-spade.png" alt="Triangular Spade"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Triangular Spade</div><div class="product-card-range">1200 · 1300 · 1400 · 1500 · 1600 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="garden-spade.png" alt="Garden Spade"/></div><span class="product-card-tag">Garden</span></div>
+      <div class="product-card-body"><div class="product-card-name">Garden Spade</div><div class="product-card-range">1750 · 1850 · 1950 · 2050 · 2150 GM</div><div class="product-card-unit">Unit: Grams (GM)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="drain-spade.png" alt="Drain Spade"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Drain Spade</div><div class="product-card-range">1.0 · 1.2 · 1.4 · 1.6 · 1.8 IN</div><div class="product-card-unit">Unit: Inches (width)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-treaded-shovel.png" alt="Square Treaded Shovel"/></div><span class="product-card-tag">Treaded</span></div>
+      <div class="product-card-body"><div class="product-card-name">Square Treaded Shovel</div><div class="product-card-range">1 · 1.5 · 2 · 2.5 · 3 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="round-treaded-shovel.png" alt="Round Treaded Shovel"/></div><span class="product-card-tag">Treaded</span></div>
+      <div class="product-card-body"><div class="product-card-name">Round Treaded Shovel</div><div class="product-card-range">1.0 · 1.25 · 1.55 · 1.75 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="flat-shovel.png" alt="Flat Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Flat Shovel</div><div class="product-card-range">1 · 1.55 · 2 · 2.75 · 2.9 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="round-mouth-shovel.png" alt="Round Mouth Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Round Mouth Shovel</div><div class="product-card-range">1 · 1.55 · 1.65 · 1.8 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="spoon-blade-shovel.png" alt="Spoon Blade Shovel"/></div><span class="product-card-tag">Special</span></div>
+      <div class="product-card-body"><div class="product-card-name">Spoon Blade Shovel</div><div class="product-card-range">1 · 1.2 · 1.4 · 1.8 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="square-mouth-shovel.png" alt="Square Mouth Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Square Mouth Shovel</div><div class="product-card-range">1.0 · 1.1 · 1.4 · 1.85 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img"><div class="product-card-img-inner"><img src="regole-shovel.png" alt="Regole Shovel"/></div></div>
+      <div class="product-card-body"><div class="product-card-name">Regole Shovel</div><div class="product-card-range">1 · 1.2 · 1.4 · 1.95 · 2 KG</div><div class="product-card-unit">Unit: Kilograms (KG)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM ORDER -->
+<div class="custom-order" id="custom">
+  <div class="fade-left">
+    <div class="custom-order-title">Custom &amp;<br><em>OEM Orders</em></div>
+    <p class="custom-order-desc">Need a specific weight, size, or blade profile? We manufacture to your exact specifications. OEM branding, export packaging, and bulk pricing available.</p>
+    <div class="custom-features">
+      <div class="custom-feature"><span class="custom-feature-dot"></span><span class="custom-feature-text">Custom dimensions</span></div>
+      <div class="custom-feature"><span class="custom-feature-dot"></span><span class="custom-feature-text">OEM branding</span></div>
+      <div class="custom-feature"><span class="custom-feature-dot"></span><span class="custom-feature-text">Bulk discounts</span></div>
+      <div class="custom-feature"><span class="custom-feature-dot"></span><span class="custom-feature-text">Export packaging</span></div>
+      <div class="custom-feature"><span class="custom-feature-dot"></span><span class="custom-feature-text">Custom alloys</span></div>
+      <div class="custom-feature"><span class="custom-feature-dot"></span><span class="custom-feature-text">Fast sampling</span></div>
+    </div>
+  </div>
+  <div class="custom-form-wrap fade-right">
+    <div class="custom-form-title">Request a Quote</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-input" placeholder="Your Name"/></div>
+      <div class="form-group"><label class="form-label">Company</label><input type="text" class="form-input" placeholder="Company"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Product &amp; Specifications</label><textarea class="form-textarea" placeholder="Describe what you need — product type, weight/size, quantity…" style="min-height:100px;"></textarea></div>
+    <div class="form-group"><label class="form-label">Contact (Phone / Email)</label><input type="text" class="form-input" placeholder="+91 XXXXX or email@example.com"/></div>
+    <button class="btn btn-orange" style="width:100%;border:none;cursor:pointer;display:block;" onclick="window.location='contact.html'">Send Enquiry →</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="logo.png" alt="NTI"/><span class="footer-brand">Nirvana Tools India</span></div>
+      <p class="footer-tagline">Incredible Tools, Exceptional Value. Manufacturing premium forged agricultural and industrial hand tools from the heart of Gujarat.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Products</div>
+      <ul class="footer-links">
+        <li><a href="products.html#hoes">Agricultural Hoes</a></li>
+        <li><a href="products.html#spades">Spades</a></li>
+        <li><a href="products.html#shovels">Shovels</a></li>
+        <li><a href="products.html#scrapers">Scrapers</a></li>
+        <li><a href="products.html">Full Catalogue</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="about.html#certifications">Certifications</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <p>Survey No.192/p, Vajapur-Salal Road, Salal. N.H-48, Sabarkantha, Gujarat — 383205</p>
+      </div>
+      <div class="footer-contact-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6z"/></svg>
+        <p>+91 99255 89060<br/>+91 90332 75554</p>
+      </div>
+      <div class="footer-contact-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <p>nirvanatoolspvtltd@gmail.com</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 <strong>Nirvana Tools India Pvt. Ltd.</strong> · All rights reserved · Salal, Gujarat 383205</p>
+    <p class="footer-copy">Incredible Tools, Exceptional Value</p>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+function filterSection(id, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  if (id === 'all') { window.scrollTo({top: document.querySelector('#hoes').offsetTop - 120, behavior:'smooth'}); return; }
+  if (id === 'catalogue') { document.getElementById('catalogue').scrollIntoView({behavior:'smooth', block:'start'}); return; }
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
 </script>
 </body>

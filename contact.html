@@ -374,6 +374,7 @@
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="logo.png" alt="NTI Logo"/>
@@ -387,18 +388,54 @@
     <li><a href="about.html">About Us</a></li>
     <li><a href="products.html">Products</a></li>
     <li><a href="gallery.html">Gallery</a></li>
-    <li class="nav-cta"><a href="contact.html" class="active">Contact Us</a></li>
+    <li class="nav-cta"><a href="contact.html">Contact Us</a></li>
   </ul>
-  <div class="nav-toggle" onclick="toggleMobile()">
+  <button class="nav-toggle" aria-label="Open menu">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
-<div class="nav-mobile" id="mobileNav">
-  <a href="index.html">Home</a>
-  <a href="about.html">About Us</a>
-  <a href="products.html">Products</a>
-  <a href="gallery.html">Gallery</a>
-  <a href="contact.html" class="active">Contact Us</a>
+ 
+<!-- ── MOBILE OVERLAY ── -->
+<div class="nav-mobile-overlay" id="mobileNavOverlay">
+  <div class="nav-mobile-backdrop"></div>
+  <div class="nav-mobile-panel">
+    <div class="nav-mobile-header">
+      <div class="nav-logo-text">
+        <strong>Nirvana Tools</strong>
+        <span>India Pvt. Ltd.</span>
+      </div>
+      <button class="nav-mobile-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+    <div class="nav-mobile-contact">
+      <div class="nav-mobile-contact-label">Quick Contact</div>
+      <a href="tel:+919925589060" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11z"/>
+        </svg>
+        +91 99255 89060
+      </a>
+      <a href="mailto:nirvanatoolspvtltd@gmail.com" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        nirvanatoolspvtltd@gmail.com
+      </a>
+    </div>
+    <div class="nav-mobile-cta">
+      <a href="contact.html">Contact Us →</a>
+    </div>
+  </div>
 </div>
 
 <!-- PAGE HEADER -->
@@ -603,6 +640,7 @@
   </div>
   <div class="map-embed fade-up" data-delay="100ms">
     <!-- Google Maps embed for Salal, Sabarkantha, Gujarat on N.H-48 -->
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.997784324811!2d72.903772!3d23.496589299999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395dc72bb460f51d%3A0x76d62e752cdb9bf4!2sNirvana%20tools%20india%20pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1774498426892!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3666.987!2d73.0!3d23.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395c1c2f4d0bfb8d%3A0x1b2e3f4a5b6c7d8e!2sSalal%2C%20Gujarat%20383205!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
       allowfullscreen=""

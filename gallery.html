@@ -83,15 +83,6 @@
 .lightbox-title { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 6px; }
 .lightbox-desc { font-size: 14px; color: var(--gray); line-height: 1.6; }
 
-/* ── TOOL SHOWCASE ── */
-.tool-showcase { padding: 80px 8%; background: var(--black); }
-.tool-showcase-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 48px; }
-.tool-showcase-item { background: rgba(255,255,255,0.04); padding: 28px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.08); transition: background 0.25s, border-color 0.25s; }
-.tool-showcase-item:hover { background: rgba(247,147,30,0.08); border-color: rgba(247,147,30,0.3); }
-.tool-showcase-item svg { opacity: 0.35; margin: 0 auto 16px; transition: opacity 0.3s; }
-.tool-showcase-item:hover svg { opacity: 0.6; }
-.tool-showcase-name { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; color: var(--white); letter-spacing: 0.06em; }
-.tool-showcase-cat { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); margin-top: 4px; font-weight: 600; }
 
 @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } .gallery-item.wide { grid-column: span 2; } .tool-showcase-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) { .gallery-grid { grid-template-columns: 1fr 1fr; } .gallery-item.wide { grid-column: span 2; } .tool-showcase-grid { grid-template-columns: 1fr 1fr; } }
@@ -99,22 +90,68 @@
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="logo.png" alt="NTI Logo"/>
-    <div class="nav-logo-text"><strong>Nirvana Tools</strong><span>India Pvt. Ltd.</span></div>
+    <div class="nav-logo-text">
+      <strong>Nirvana Tools</strong>
+      <span>India Pvt. Ltd.</span>
+    </div>
   </a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="about.html">About Us</a></li>
     <li><a href="products.html">Products</a></li>
-    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
     <li class="nav-cta"><a href="contact.html">Contact Us</a></li>
   </ul>
-  <div class="nav-toggle" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  <button class="nav-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-<div class="nav-mobile" id="mobileNav">
-  <a href="index.html">Home</a><a href="about.html">About Us</a><a href="products.html">Products</a><a href="gallery.html" class="active">Gallery</a><a href="contact.html">Contact Us</a>
+ 
+<!-- ── MOBILE OVERLAY ── -->
+<div class="nav-mobile-overlay" id="mobileNavOverlay">
+  <div class="nav-mobile-backdrop"></div>
+  <div class="nav-mobile-panel">
+    <div class="nav-mobile-header">
+      <div class="nav-logo-text">
+        <strong>Nirvana Tools</strong>
+        <span>India Pvt. Ltd.</span>
+      </div>
+      <button class="nav-mobile-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+    <div class="nav-mobile-contact">
+      <div class="nav-mobile-contact-label">Quick Contact</div>
+      <a href="tel:+919925589060" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11z"/>
+        </svg>
+        +91 99255 89060
+      </a>
+      <a href="mailto:nirvanatoolspvtltd@gmail.com" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        nirvanatoolspvtltd@gmail.com
+      </a>
+    </div>
+    <div class="nav-mobile-cta">
+      <a href="contact.html">Contact Us →</a>
+    </div>
+  </div>
 </div>
 
 <div class="page-header">
@@ -129,8 +166,6 @@
   <button class="gfilter-btn active" onclick="showSection('all', this)">All</button>
   <button class="gfilter-btn" onclick="showSection('products', this)">Products</button>
   <button class="gfilter-btn" onclick="showSection('facility', this)">Facility</button>
-  <button class="gfilter-btn" onclick="showSection('process', this)">Process</button>
-  <button class="gfilter-btn" onclick="showSection('tools', this)">Tool Details</button>
 </div>
 
 <!-- MARQUEE -->
@@ -156,87 +191,73 @@
   <div class="gallery-section-title fade-up">Product Showcase</div>
   <div class="gallery-grid" data-stagger>
 
-    <div class="gallery-item wide" onclick="openLightbox('Hoe Round Eye Collection','Multiple weight variants of our bestselling Round Eye Hoe — forged steel blades from 1.5 to 4.25 LB.')">
+    <div class="gallery-item wide" >
       <div class="gallery-item-inner" style="background:#EEEBE4;">
-        <svg width="200" height="120" viewBox="0 0 400 200" fill="none">
-          <!-- Three hoes side by side -->
-          <path d="M60 20 L140 20 L135 90 L65 90 Z" fill="#2E2E2E"/><circle cx="100" cy="34" r="14" fill="#F5F3EF" stroke="#2E2E2E" stroke-width="2.5"/><path d="M63 87 L137 87 L139 97 L61 97 Z" fill="#888"/><rect x="94" y="97" width="12" height="80" rx="6" fill="#555"/>
-          <path d="M170 20 L250 20 L245 90 L175 90 Z" fill="#2E2E2E"/><circle cx="210" cy="34" r="14" fill="#F5F3EF" stroke="#2E2E2E" stroke-width="2.5"/><path d="M173 87 L247 87 L249 97 L171 97 Z" fill="#888"/><rect x="204" y="97" width="12" height="80" rx="6" fill="#555"/>
-          <path d="M280 20 L360 20 L355 90 L285 90 Z" fill="#2E2E2E"/><circle cx="320" cy="34" r="14" fill="#F5F3EF" stroke="#2E2E2E" stroke-width="2.5"/><path d="M283 87 L357 87 L359 97 L281 97 Z" fill="#888"/><rect x="314" y="97" width="12" height="80" rx="6" fill="#555"/>
-        </svg>
+        <img src="hoe-collection.png" height="310" width="630" alt="Hoe Round Eye Collection" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Hoe Round Eye Collection</div><div class="gallery-overlay-sub">6 weight variants — 1.5 to 4.25 LB</div></div></div>
       <span class="gallery-img-tag">Hoes</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Hoe Sunken Eye','Premium sunken-eye design for reinforced handle attachment. Available 2–3.5 LB.')">
+    <div class="gallery-item" >
       <div class="gallery-item-inner" style="background:#E8E4DD;">
-        <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M20 14 L100 14 L96 70 L24 70 Z" fill="#2E2E2E"/><ellipse cx="60" cy="25" rx="11" ry="9" fill="#F5F3EF" stroke="#2E2E2E" stroke-width="2"/><path d="M22 67 L98 67 L100 75 L20 75 Z" fill="#888"/><rect x="54" y="75" width="12" height="80" rx="6" fill="#555"/></svg>
+        <img src="hoe-sunken-eye.png" height="310" width="310" alt="Sunken Eye Hoe" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Hoe Sunken Eye</div><div class="gallery-overlay-sub">2 – 3.50 LB</div></div></div>
       <span class="gallery-img-tag">Hoes</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Heavy Hoe — Reinforced Blade','Reinforced blade for intense heavy-duty agricultural use. Range: 900–1700 GM.')">
+    <div class="gallery-item" >
       <div class="gallery-item-inner" style="background:#E4E4E0;">
-        <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M14 12 L106 12 L102 72 L18 72 Z" fill="#2E2E2E"/><circle cx="60" cy="25" r="13" fill="#F5F3EF" stroke="#F7931E" stroke-width="2"/><line x1="26" y1="44" x2="94" y2="44" stroke="#F7931E" stroke-width="2" opacity="0.5"/><path d="M16 69 L104 69 L106 77 L14 77 Z" fill="#888"/><rect x="54" y="77" width="12" height="78" rx="6" fill="#555"/></svg>
+        <img src="hoe-heavy.png" height="310" width="310" alt="Heavy Hoe" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Hoe Reinforced Blade</div><div class="gallery-overlay-sub">900 – 1700 GM</div></div></div>
       <span class="gallery-img-tag">Heavy</span>
     </div>
 
-    <div class="gallery-item wide" onclick="openLightbox('Spades Collection','Our full range of forged spades: bent, round point, square, triangular, and garden spades.')">
+    <div class="gallery-item wide" >
       <div class="gallery-item-inner" style="background:#E0E4E8;">
-        <svg width="200" height="120" viewBox="0 0 400 200" fill="none">
-          <path d="M60 14 L140 14 L148 80 L100 110 L52 80 Z" fill="#2E2E2E"/><rect x="94" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M52 78 L148 78 L150 86 L50 86 Z" fill="#aaa"/><rect x="94" y="86" width="12" height="90" rx="6" fill="#555"/>
-          <path d="M185 14 L265 14 L273 80 L225 110 L177 80 Z" fill="#2E2E2E"/><rect x="219" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M177 78 L273 78 L275 86 L175 86 Z" fill="#aaa"/><rect x="219" y="86" width="12" height="90" rx="6" fill="#555"/>
-          <path d="M308 14 L376 14 L378 80 L342 108 L306 80 Z" fill="#2E2E2E"/><rect x="336" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M306 78 L378 78 L380 86 L304 86 Z" fill="#aaa"/><rect x="336" y="86" width="12" height="90" rx="6" fill="#555"/>
-        </svg>
+        <img src="spades-collection.png" height="310" width="630" alt="Spades Collection" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Spades Collection</div><div class="gallery-overlay-sub">10+ variants — 1000 to 2150 GM</div></div></div>
       <span class="gallery-img-tag">Spades</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Garden Spade with D-Handle','Full-length garden spade with hardwood handle and D-grip. 1750–2150 GM.')">
-      <div class="gallery-item-inner" style="background:#E8ECE4;">
-        <svg width="90" height="140" viewBox="0 0 120 180" fill="none"><rect x="28" y="14" width="64" height="64" fill="#2E2E2E"/><rect x="54" y="4" width="12" height="12" rx="3" fill="#2E2E2E"/><rect x="28" y="70" width="64" height="9" fill="#aaa"/><rect x="8" y="79" width="104" height="9" rx="4" fill="#444"/><rect x="54" y="88" width="12" height="67" rx="6" fill="#555"/><rect x="38" y="150" width="44" height="14" rx="7" fill="#333"/></svg>
+    <div class="gallery-item" >
+      <div class="gallery-item-inner" style="background:#ffffff;">
+        <img src="garden-spade.png" height="220" width="310" alt="Garden Spade with D-Handle" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Garden Spade</div><div class="gallery-overlay-sub">With D-Handle · 1750–2150 GM</div></div></div>
       <span class="gallery-img-tag">Spades</span>
     </div>
 
-    <div class="gallery-item tall" onclick="openLightbox('Shovels Range','Complete shovel range: square treaded, round mouth, flat, spoon blade — 1 to 3 KG.')">
+    <div class="gallery-item tall" >
       <div class="gallery-item-inner" style="background:#ECE8E0; aspect-ratio:1/2;">
-        <svg width="90" height="160" viewBox="0 0 120 240" fill="none">
-          <!-- Top shovel -->
-          <rect x="28" y="10" width="64" height="55" fill="#2E2E2E"/><rect x="54" y="0" width="12" height="12" rx="3" fill="#2E2E2E"/><rect x="28" y="57" width="64" height="8" fill="#aaa"/><rect x="8" y="65" width="104" height="8" rx="4" fill="#444"/><rect x="54" y="73" width="12" height="45" rx="6" fill="#555"/>
-          <!-- Bottom shovel -->
-          <path d="M36 130 L84 130 L90 180 L60 196 L30 180 Z" fill="#2E2E2E"/><rect x="54" y="120" width="12" height="12" rx="3" fill="#2E2E2E"/><path d="M30 178 L90 178 L92 186 L28 186 Z" fill="#aaa"/><rect x="8" y="186" width="104" height="8" rx="4" fill="#444"/><rect x="54" y="194" width="12" height="40" rx="6" fill="#555"/>
-        </svg>
+        <img src="shovel-collection.png" height="620" width="310" alt="Shovels Range" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Shovels Range</div><div class="gallery-overlay-sub">8+ variants · 1–3 KG</div></div></div>
       <span class="gallery-img-tag">Shovels</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Scraper Curved','Curved scraper blade for efficient soil clearing. Available in 1–3 LB range.')">
-      <div class="gallery-item-inner" style="background:#E4E8EC;">
-        <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M20 12 Q90 8 96 70 L88 80 L18 80 Z" fill="#2E2E2E"/><path d="M18 78 L90 78 L92 86 L16 86 Z" fill="#aaa"/><rect x="54" y="86" width="12" height="69" rx="6" fill="#555"/></svg>
+    <div class="gallery-item" >
+      <div class="gallery-item-inner" style="background:#ffffff;">
+        <img src="scraper-curved.png" height="280" width="280" alt="Scraper Curved" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Scraper Curved</div><div class="gallery-overlay-sub">1 – 3 LB</div></div></div>
       <span class="gallery-img-tag">Scrapers</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Mamooty','Traditional mamooty — heavy-duty multipurpose tool used widely in South India. 6–10 LB.')">
-      <div class="gallery-item-inner" style="background:#E8E4EC;">
-        <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M30 14 L90 14 L100 50 L90 86 L30 86 L20 50 Z" fill="#2E2E2E"/><circle cx="60" cy="26" r="11" fill="#F5F3EF" stroke="#2E2E2E" stroke-width="2"/><path d="M25 82 L95 82 L97 90 L23 90 Z" fill="#888"/><rect x="54" y="90" width="12" height="65" rx="6" fill="#555"/></svg>
+    <div class="gallery-item" >
+      <div class="gallery-item-inner" style="background:#ffffff;">
+        <img src="mamooty.png" height="280" width="280" alt="Mamooty" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Mamooty</div><div class="gallery-overlay-sub">6 – 10 LB</div></div></div>
       <span class="gallery-img-tag">Special</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Romanian Hoe','Distinctive Romanian-style hoe with fan-shaped blade. 2–6 LB.')">
-      <div class="gallery-item-inner" style="background:#ECE4E4;">
-        <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M10 50 Q60 10 110 50 Q110 95 60 102 Q10 95 10 50 Z" fill="#2E2E2E"/><circle cx="60" cy="25" r="10" fill="#F5F3EF" stroke="#2E2E2E" stroke-width="2"/><rect x="54" y="102" width="12" height="53" rx="6" fill="#555"/></svg>
+    <div class="gallery-item" >
+      <div class="gallery-item-inner" style="background:#ffffff;">
+        <img src="romanian-hoe.png" height="280" width="280" alt="Romanian Hoe" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Romanian Hoe</div><div class="gallery-overlay-sub">2 – 6 LB</div></div></div>
       <span class="gallery-img-tag">Special</span>
@@ -249,49 +270,34 @@
   <div class="gallery-section-title fade-up">Manufacturing Facility</div>
   <div class="gallery-grid" data-stagger>
 
-    <div class="gallery-item wide" onclick="openLightbox('Forging Plant — Salal, Gujarat','Our state-of-the-art forging plant on N.H-48, Ahmedabad–Himatnagar Highway, Sabarkantha, Gujarat.')">
+    <div class="gallery-item wide" >
       <div class="gallery-item-inner" style="background:#E8E4DC;">
-        <svg width="280" height="140" viewBox="0 0 460 200" fill="none"><rect x="20" y="60" width="420" height="130" rx="4" fill="#CCC9C0"/><rect x="50" y="80" width="90" height="100" fill="#B8B4AA"/><rect x="160" y="80" width="90" height="100" fill="#B8B4AA"/><rect x="270" y="80" width="90" height="100" fill="#B8B4AA"/><rect x="380" y="80" width="60" height="100" fill="#B8B4AA"/><rect x="160" y="40" width="140" height="22" rx="2" fill="#AAA69C"/><rect x="60" y="30" width="30" height="32" rx="2" fill="#bbb"/><rect x="100" y="36" width="20" height="26" rx="2" fill="#bbb"/><circle cx="230" cy="120" r="24" fill="#F7931E" opacity="0.2" stroke="#F7931E" stroke-width="2"/></svg>
+        <img src="nirvana_factory.png" height="400" width="630" alt="Manufacturing Plant Aerial View" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Manufacturing Plant</div><div class="gallery-overlay-sub">Salal, Sabarkantha, Gujarat</div></div></div>
       <span class="gallery-img-tag">Facility</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Forging Press','High-tonnage drop-forging press that shapes steel billets into precision tool heads.')">
-      <div class="gallery-item-inner" style="background:#DCDAD6;">
-        <svg width="100" height="120" viewBox="0 0 160 200" fill="none"><rect x="40" y="10" width="80" height="50" rx="4" fill="#888"/><rect x="60" y="60" width="40" height="80" fill="#777"/><rect x="20" y="140" width="120" height="50" rx="4" fill="#666"/><rect x="50" y="135" width="60" height="10" rx="2" fill="#F7931E" opacity="0.7"/><rect x="65" y="55" width="30" height="10" fill="#F7931E" opacity="0.3"/></svg>
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Forging Press</div><div class="gallery-overlay-sub">Drop-forging unit</div></div></div>
-      <span class="gallery-img-tag">Process</span>
-    </div>
 
-    <div class="gallery-item" onclick="openLightbox('Heat Treatment Furnace','High-temperature furnace for quench-hardening and tempering of finished tool blades.')">
-      <div class="gallery-item-inner" style="background:#E0D8D0;">
-        <svg width="100" height="120" viewBox="0 0 160 200" fill="none"><rect x="20" y="20" width="120" height="140" rx="6" fill="#888"/><rect x="40" y="40" width="80" height="80" rx="4" fill="#222"/><circle cx="80" cy="80" r="28" fill="#F7931E" opacity="0.6"/><circle cx="80" cy="80" r="16" fill="#FFF" opacity="0.3"/><rect x="55" y="165" width="50" height="20" rx="4" fill="#666"/></svg>
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Heat Treatment Furnace</div><div class="gallery-overlay-sub">Quench-hardening station</div></div></div>
-      <span class="gallery-img-tag">Process</span>
-    </div>
-
-    <div class="gallery-item" onclick="openLightbox('Quality Inspection Area','Dedicated area where each tool is checked for dimensional accuracy and surface finish.')">
+    <div class="gallery-item" >
       <div class="gallery-item-inner" style="background:#E4E8E0;">
-        <svg width="100" height="100" viewBox="0 0 160 160" fill="none"><rect x="20" y="20" width="120" height="90" rx="4" fill="#ccc"/><rect x="35" y="35" width="90" height="60" rx="2" fill="#ddd"/><circle cx="80" cy="65" r="22" fill="none" stroke="#F7931E" stroke-width="3"/><path d="M66 65 L76 75 L96 55" stroke="#F7931E" stroke-width="3" stroke-linecap="round"/><rect x="20" y="114" width="120" height="26" rx="3" fill="#bbb"/></svg>
+        <img src="nirvana-inspection.png" height="310" width="310" alt="Quality Inspection Area" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Quality Inspection</div><div class="gallery-overlay-sub">100% unit inspection</div></div></div>
       <span class="gallery-img-tag">Quality</span>
     </div>
 
-    <div class="gallery-item" onclick="openLightbox('Finished Goods Warehouse','Organized warehouse with racks for all product SKUs, ready for bulk dispatch.')">
+    <div class="gallery-item" >
       <div class="gallery-item-inner" style="background:#E0E4E8;">
-        <svg width="100" height="100" viewBox="0 0 160 160" fill="none"><rect x="10" y="40" width="140" height="110" rx="4" fill="#ccc"/><rect x="20" y="55" width="28" height="85" fill="#bbb"/><rect x="55" y="55" width="28" height="85" fill="#bbb"/><rect x="90" y="55" width="28" height="85" fill="#bbb"/><rect x="125" y="55" width="25" height="85" fill="#bbb"/><rect x="10" y="36" width="140" height="8" rx="2" fill="#F7931E" opacity="0.4"/></svg>
+        <img src="nirvana-packing.png" height="400" width="630" alt="Finished Goods Warehouse" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Finished Goods Warehouse</div><div class="gallery-overlay-sub">Ready for dispatch</div></div></div>
       <span class="gallery-img-tag">Facility</span>
     </div>
 
-    <div class="gallery-item wide" onclick="openLightbox('N.H-48 Location — Aerial View','Our plant is strategically located on National Highway 48 for fast logistics and distribution.')">
+    <div class="gallery-item wide" >
       <div class="gallery-item-inner" style="background:#DDE4D8;">
-        <svg width="240" height="120" viewBox="0 0 400 200" fill="none"><rect x="0" y="0" width="400" height="200" fill="#D4DCCC"/><rect x="0" y="90" width="400" height="20" fill="#999"/><path d="M0 95 L400 95" stroke="white" stroke-width="2" stroke-dasharray="20 15"/><rect x="140" y="30" width="120" height="60" fill="#BEB9AF"/><rect x="155" y="36" width="90" height="46" fill="#CAC5BB"/><rect x="180" y="25" width="40" height="12" fill="#aaa"/><circle cx="200" cy="16" r="6" fill="#F7931E"/></svg>
+        <img src="nirvana-highway.png" height="310" width="630" alt="N.H-48 Location Aerial View" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">N.H-48 Location</div><div class="gallery-overlay-sub">Ahmedabad–Himatnagar Highway, Salal</div></div></div>
       <span class="gallery-img-tag">Location</span>
@@ -299,112 +305,7 @@
   </div>
 </div>
 
-<!-- PROCESS / TOOL DETAIL GALLERY -->
-<div class="gallery-section" id="process">
-  <div class="gallery-section-title fade-up">Manufacturing Process &amp; Tool Details</div>
-  <div class="gallery-grid" data-stagger>
 
-    <div class="gallery-item" onclick="openLightbox('Steel Billet — Raw Material','High-carbon steel billets before entering the forging process.')">
-      <div class="gallery-item-inner" style="background:#E8E0D8;">
-        <svg width="90" height="100" viewBox="0 0 140 120" fill="none"><rect x="10" y="40" width="120" height="40" rx="6" fill="#888"/><rect x="10" y="38" width="120" height="6" rx="3" fill="#aaa"/><rect x="12" y="78" width="116" height="6" rx="3" fill="#666"/></svg>
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Steel Billets</div><div class="gallery-overlay-sub">High-carbon raw material</div></div></div>
-      <span class="gallery-img-tag">Raw Material</span>
-    </div>
-
-    <div class="gallery-item" onclick="openLightbox('Hot Forging in Progress','Steel at forging temperature (1100–1200°C) being shaped in the drop-forging press.')">
-      <div class="gallery-item-inner" style="background:#EDE0D4;">
-        <svg width="90" height="100" viewBox="0 0 140 120" fill="none"><rect x="20" y="30" width="100" height="60" rx="4" fill="#888"/><rect x="20" y="10" width="100" height="22" rx="3" fill="#666"/><circle cx="70" cy="60" r="20" fill="#F7931E" opacity="0.6"/><circle cx="70" cy="60" r="10" fill="#FFF" opacity="0.3"/></svg>
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Hot Forging</div><div class="gallery-overlay-sub">1100–1200°C steel forming</div></div></div>
-      <span class="gallery-img-tag">Process</span>
-    </div>
-
-    <div class="gallery-item wide" onclick="openLightbox('Blade Edge Grinding','Precision grinding of blade cutting edges to achieve the correct bevel and sharpness.')">
-      <div class="gallery-item-inner" style="background:#DDE4E8;">
-        <svg width="220" height="120" viewBox="0 0 360 200" fill="none"><circle cx="180" cy="100" r="80" fill="none" stroke="#ccc" stroke-width="20"/><circle cx="180" cy="100" r="60" fill="#ddd"/><circle cx="180" cy="100" r="20" fill="#888"/><path d="M50 150 L150 100" stroke="#2E2E2E" stroke-width="8" stroke-linecap="round"/><path d="M145 98 L160 108" stroke="#F7931E" stroke-width="4" stroke-linecap="round"/></svg>
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Blade Grinding</div><div class="gallery-overlay-sub">Precision edge bevel cutting</div></div></div>
-      <span class="gallery-img-tag">Process</span>
-    </div>
-
-    <div class="gallery-item" onclick="openLightbox('Black Oxide Surface Treatment','Black oxide coating applied to forged blades for corrosion resistance and professional finish.')">
-      <div class="gallery-item-inner" style="background:#D8DDE4;">
-        <svg width="90" height="120" viewBox="0 0 120 160" fill="none"><path d="M18 12 L102 12 L97 70 L23 70 Z" fill="#1C1C1C"/><circle cx="60" cy="24" r="12" fill="#2E2E2E" stroke="#555" stroke-width="2"/><path d="M21 67 L99 67 L101 75 L19 75 Z" fill="#555"/><rect x="54" y="75" width="12" height="80" rx="6" fill="#333"/></svg>
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Black Oxide Treatment</div><div class="gallery-overlay-sub">Corrosion-resistant finish</div></div></div>
-      <span class="gallery-img-tag">Finish</span>
-    </div>
-
-    <div class="gallery-item" onclick="openLightbox('Packed &amp; Ready for Dispatch','Export-grade packaging with product labeling, ready for bulk shipping.')">
-      <div class="gallery-item-inner" style="background:#E4E8DD;">
-        <svg width="90" height="100" viewBox="0 0 140 120" fill="none"><rect x="20" y="20" width="100" height="80" rx="4" fill="#D4C9A8"/><rect x="20" y="20" width="100" height="8" rx="2" fill="#C4B898"/><path d="M20 56 L120 56" stroke="#AAA290" stroke-width="2"/><rect x="40" y="66" width="60" height="8" rx="2" fill="#AAA290"/><rect x="50" y="80" width="40" height="6" rx="2" fill="#AAA290"/><rect x="56" y="14" width="28" height="12" rx="2" fill="#F7931E" opacity="0.7"/></svg>
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Packed for Dispatch</div><div class="gallery-overlay-sub">Export-grade packaging</div></div></div>
-      <span class="gallery-img-tag">Packaging</span>
-    </div>
-  </div>
-</div>
-
-<!-- TOOL SHOWCASE -->
-<div class="tool-showcase">
-  <div class="section-header-center">
-    <div class="section-eyebrow fade-up" style="justify-content:center"><span></span><p style="color:var(--orange)">Product Index</p><span></span></div>
-    <h2 class="section-title fade-up" data-delay="80ms" style="color:var(--white);">All <em>Tools</em></h2>
-  </div>
-  <div class="tool-showcase-grid" data-stagger>
-    <a href="products.html#hoes" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><path d="M10 8 L70 8 L67 50 L13 50 Z" fill="#eee"/><circle cx="40" cy="17" r="9" fill="transparent" stroke="#F7931E" stroke-width="2"/><rect x="36" y="50" width="8" height="48" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Round Eye Hoe</div>
-      <div class="tool-showcase-cat">Hoes</div>
-    </a>
-    <a href="products.html#hoes" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><path d="M10 8 L70 8 L67 50 L13 50 Z" fill="#eee"/><ellipse cx="40" cy="16" rx="9" ry="7" fill="transparent" stroke="#F7931E" stroke-width="2"/><rect x="36" y="50" width="8" height="48" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Sunken Eye Hoe</div>
-      <div class="tool-showcase-cat">Hoes</div>
-    </a>
-    <a href="products.html#hoes" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><path d="M40 8 L70 48 L10 48 Z" fill="#eee"/><circle cx="40" cy="18" r="8" fill="transparent" stroke="#F7931E" stroke-width="2"/><rect x="36" y="48" width="8" height="50" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Triangular Hoe</div>
-      <div class="tool-showcase-cat">Hoes</div>
-    </a>
-    <a href="products.html#hoes" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><path d="M8 30 Q40 5 72 30 Q72 64 40 70 Q8 64 8 30 Z" fill="#eee"/><circle cx="40" cy="14" r="8" fill="transparent" stroke="#F7931E" stroke-width="2"/><rect x="36" y="70" width="8" height="28" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Romanian Hoe</div>
-      <div class="tool-showcase-cat">Hoes</div>
-    </a>
-    <a href="products.html#hoes" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><path d="M10 30 Q40 6 70 30 L66 54 L14 54 Z" fill="#eee"/><circle cx="40" cy="18" r="9" fill="transparent" stroke="#F7931E" stroke-width="2"/><rect x="36" y="54" width="8" height="44" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Half Moon Hoe</div>
-      <div class="tool-showcase-cat">Hoes</div>
-    </a>
-    <a href="products.html#hoes" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><path d="M18 8 L62 8 L68 38 L40 60 L12 38 Z" fill="#eee"/><circle cx="40" cy="18" r="8" fill="transparent" stroke="#F7931E" stroke-width="2"/><rect x="36" y="60" width="8" height="38" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Mamooty</div>
-      <div class="tool-showcase-cat">Hoes</div>
-    </a>
-    <a href="products.html#spades" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><path d="M20 8 L60 8 L66 50 L40 64 L14 50 Z" fill="#eee"/><rect x="36" y="2" width="8" height="8" rx="2" fill="#aaa"/><rect x="36" y="64" width="8" height="34" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Triangular Spade</div>
-      <div class="tool-showcase-cat">Spades</div>
-    </a>
-    <a href="products.html#spades" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><rect x="16" y="8" width="48" height="50" fill="#eee"/><rect x="36" y="2" width="8" height="8" rx="2" fill="#aaa"/><rect x="36" y="58" width="8" height="40" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Square Spade</div>
-      <div class="tool-showcase-cat">Spades</div>
-    </a>
-    <a href="products.html#spades" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><rect x="16" y="8" width="48" height="44" fill="#eee"/><rect x="4" y="50" width="72" height="8" rx="3" fill="#aaa"/><rect x="36" y="58" width="8" height="40" rx="4" fill="#888"/></svg>
-      <div class="tool-showcase-name">Treaded Shovel</div>
-      <div class="tool-showcase-cat">Shovels</div>
-    </a>
-    <a href="products.html#spades" class="tool-showcase-item" style="text-decoration:none;">
-      <svg width="40" height="60" viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="26" rx="26" ry="24" fill="#eee"/><rect x="36" y="50" width="8" height="48" rx="4" fill="#aaa"/></svg>
-      <div class="tool-showcase-name">Spoon Blade Shovel</div>
-      <div class="tool-showcase-cat">Shovels</div>
-    </a>
-  </div>
-</div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">

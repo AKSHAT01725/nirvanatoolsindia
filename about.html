@@ -123,26 +123,68 @@
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="logo.png" alt="NTI Logo"/>
-    <div class="nav-logo-text"><strong>Nirvana Tools</strong><span>India Pvt. Ltd.</span></div>
+    <div class="nav-logo-text">
+      <strong>Nirvana Tools</strong>
+      <span>India Pvt. Ltd.</span>
+    </div>
   </a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
-    <li><a href="about.html" class="active">About Us</a></li>
+    <li><a href="about.html">About Us</a></li>
     <li><a href="products.html">Products</a></li>
     <li><a href="gallery.html">Gallery</a></li>
     <li class="nav-cta"><a href="contact.html">Contact Us</a></li>
   </ul>
-  <div class="nav-toggle" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  <button class="nav-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-<div class="nav-mobile" id="mobileNav">
-  <a href="index.html">Home</a>
-  <a href="about.html" class="active">About Us</a>
-  <a href="products.html">Products</a>
-  <a href="gallery.html">Gallery</a>
-  <a href="contact.html">Contact Us</a>
+ 
+<!-- ── MOBILE OVERLAY ── -->
+<div class="nav-mobile-overlay" id="mobileNavOverlay">
+  <div class="nav-mobile-backdrop"></div>
+  <div class="nav-mobile-panel">
+    <div class="nav-mobile-header">
+      <div class="nav-logo-text">
+        <strong>Nirvana Tools</strong>
+        <span>India Pvt. Ltd.</span>
+      </div>
+      <button class="nav-mobile-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+    <div class="nav-mobile-contact">
+      <div class="nav-mobile-contact-label">Quick Contact</div>
+      <a href="tel:+919925589060" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11z"/>
+        </svg>
+        +91 99255 89060
+      </a>
+      <a href="mailto:nirvanatoolspvtltd@gmail.com" class="nav-mobile-contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        nirvanatoolspvtltd@gmail.com
+      </a>
+    </div>
+    <div class="nav-mobile-cta">
+      <a href="contact.html">Contact Us →</a>
+    </div>
+  </div>
 </div>
 
 <!-- PAGE HEADER -->
@@ -181,7 +223,7 @@
       <div class="story-img-main">
         <div class="story-img-placeholder">
           <!-- Forge/plant image placeholder -->
-          <svg width="120" height="120" viewBox="0 0 200 200" fill="none"><rect x="30" y="70" width="140" height="100" rx="4" fill="#e0e0e0"/><rect x="55" y="90" width="90" height="60" rx="2" fill="#ccc"/><circle cx="100" cy="120" r="22" fill="#f7931e" opacity="0.25" stroke="#f7931e" stroke-width="2"/><rect x="80" y="40" width="40" height="32" rx="4" fill="#ddd"/><path d="M60 168 L75 185 L125 185 L140 168" stroke="#bbb" stroke-width="2"/><rect x="40" y="62" width="16" height="12" rx="2" fill="#ccc"/><rect x="144" y="62" width="16" height="12" rx="2" fill="#ccc"/></svg>
+          <img src="nirvana_factory.png" height="600" width="600" alt="Scraper Curved" class="product-image">
           <p>Manufacturing Plant · Salal, Gujarat</p>
         </div>
         <div class="story-img-accent">
@@ -230,7 +272,7 @@
   <div class="photos-grid" data-stagger>
     <div class="photo-card">
       <div class="photo-card-img" style="background:#ebe8e2;">
-        <svg width="100" height="100" viewBox="0 0 200 200" fill="none"><rect x="20" y="60" width="160" height="120" rx="4" fill="#ccc"/><rect x="40" y="80" width="120" height="80" rx="2" fill="#bbb"/><circle cx="100" cy="110" r="28" fill="#f7931e" opacity="0.3" stroke="#f7931e" stroke-width="3"/><rect x="85" y="30" width="30" height="32" rx="3" fill="#ddd"/></svg>
+        <img src="nirvana_inside_1.png" height="300" width="400" alt="Scraper Curved" class="product-image">
       </div>
       <div class="photo-card-body">
         <div class="photo-card-title">Forging Unit</div>
@@ -239,7 +281,7 @@
     </div>
     <div class="photo-card">
       <div class="photo-card-img" style="background:#e8ebe2;">
-        <svg width="100" height="100" viewBox="0 0 200 200" fill="none"><rect x="30" y="40" width="140" height="120" rx="4" fill="#ccc"/><path d="M50 100 L80 70 L110 100 L140 70 L160 90" stroke="#f7931e" stroke-width="4" fill="none" opacity="0.5"/><rect x="60" y="130" width="80" height="20" rx="2" fill="#bbb"/></svg>
+        <img src="nirvana_inside_2.png" height="300" width="400" alt="Scraper Curved" class="product-image">
       </div>
       <div class="photo-card-body">
         <div class="photo-card-title">Heat Treatment</div>
@@ -248,7 +290,7 @@
     </div>
     <div class="photo-card">
       <div class="photo-card-img" style="background:#e2e8eb;">
-        <svg width="100" height="100" viewBox="0 0 200 200" fill="none"><rect x="25" y="50" width="150" height="110" rx="4" fill="#ccc"/><path d="M45 100 L75 80 L105 100 L135 80 L155 90" stroke="#888" stroke-width="3" fill="none"/><circle cx="100" cy="105" r="20" fill="none" stroke="#f7931e" stroke-width="3" opacity="0.5"/></svg>
+        <img src="nirvana_inside_3.png" height="300" width="400" alt="Scraper Curved" class="product-image">
       </div>
       <div class="photo-card-body">
         <div class="photo-card-title">Quality Check</div>
@@ -257,7 +299,7 @@
     </div>
     <div class="photo-card">
       <div class="photo-card-img" style="background:#ebe2e8;">
-        <svg width="100" height="100" viewBox="0 0 200 200" fill="none"><rect x="20" y="60" width="160" height="100" rx="4" fill="#ccc"/><rect x="40" y="75" width="30" height="70" fill="#bbb"/><rect x="85" y="75" width="30" height="70" fill="#bbb"/><rect x="130" y="75" width="30" height="70" fill="#bbb"/><rect x="20" y="56" width="160" height="8" rx="2" fill="#f7931e" opacity="0.5"/></svg>
+        <img src="nirvana_inside_4.png" height="300" width="400" alt="Scraper Curved" class="product-image">
       </div>
       <div class="photo-card-body">
         <div class="photo-card-title">Finished Goods Storage</div>
@@ -266,7 +308,7 @@
     </div>
     <div class="photo-card">
       <div class="photo-card-img" style="background:#e8e2eb;">
-        <svg width="100" height="100" viewBox="0 0 200 200" fill="none"><rect x="30" y="50" width="140" height="110" rx="4" fill="#ccc"/><circle cx="100" cy="105" r="35" fill="#f7931e" opacity="0.18" stroke="#f7931e" stroke-width="2"/><path d="M75 95 L95 115 L130 80" stroke="#f7931e" stroke-width="5" stroke-linecap="round" opacity="0.7"/></svg>
+        <img src="nirvana_inside_5.png" height="300" width="400" alt="Scraper Curved" class="product-image">
       </div>
       <div class="photo-card-body">
         <div class="photo-card-title">Export Packaging</div>
@@ -275,7 +317,7 @@
     </div>
     <div class="photo-card">
       <div class="photo-card-img" style="background:#e2ebe8;">
-        <svg width="100" height="100" viewBox="0 0 200 200" fill="none"><rect x="20" y="80" width="160" height="90" rx="4" fill="#ccc"/><rect x="40" y="40" width="50" height="44" rx="3" fill="#ddd"/><rect x="110" y="40" width="50" height="44" rx="3" fill="#ddd"/><rect x="55" y="100" width="90" height="50" rx="2" fill="#bbb"/></svg>
+        <img src="nirvana_inside_6.png" height="300" width="400" alt="Scraper Curved" class="product-image">
       </div>
       <div class="photo-card-body">
         <div class="photo-card-title">Loading &amp; Dispatch</div>
