@@ -39,24 +39,49 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
 }
+
+/* FIXED GALLERY ITEM STYLES */
 .gallery-item {
-  position: relative; overflow: hidden; cursor: pointer;
+  position: relative; 
+  overflow: hidden; 
+  cursor: pointer;
   background: var(--bg2);
   border: 1.5px solid var(--border);
   transition: transform 0.3s, box-shadow 0.3s;
 }
-.gallery-item:hover { transform: scale(1.02); box-shadow: var(--shadow-lg); z-index: 2; }
+.gallery-item:hover { 
+  transform: scale(1.02); 
+  box-shadow: var(--shadow-lg); 
+  z-index: 2; 
+}
+
 .gallery-item.wide { grid-column: span 2; }
 .gallery-item.tall { grid-row: span 2; }
+
 .gallery-item-inner {
-  width: 100%; aspect-ratio: 1;
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg2);
 }
-.gallery-item.wide .gallery-item-inner { aspect-ratio: 2/1; }
-.gallery-item.tall .gallery-item-inner { aspect-ratio: 1/2; }
-.gallery-item-inner svg { opacity: 0.14; transition: opacity 0.3s, transform 0.4s; }
-.gallery-item:hover .gallery-item-inner svg { opacity: 0.22; transform: scale(1.06); }
+
+.gallery-item-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* Main fix for cropping */
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover .gallery-item-inner img {
+  transform: scale(1.08);
+}
+
+/* Aspect Ratios */
+.gallery-item .gallery-item-inner { aspect-ratio: 1 / 1; }
+.gallery-item.wide .gallery-item-inner { aspect-ratio: 2 / 1; }
+.gallery-item.tall .gallery-item-inner { aspect-ratio: 1 / 2; }
 
 .gallery-overlay {
   position: absolute; inset: 0;
@@ -67,25 +92,114 @@
 }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
 .gallery-overlay-text { color: var(--white); }
-.gallery-overlay-title { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; }
-.gallery-overlay-sub { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+.gallery-overlay-title { 
+  font-family: 'Barlow Condensed', sans-serif; 
+  font-size: 16px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+}
+.gallery-overlay-sub { 
+  font-size: 11px; 
+  color: rgba(255,255,255,0.7); 
+  margin-top: 2px; 
+}
 
-.gallery-img-tag { position: absolute; top: 10px; left: 10px; background: var(--orange); color: var(--white); font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; }
+.gallery-img-tag { 
+  position: absolute; 
+  top: 10px; 
+  left: 10px; 
+  background: var(--orange); 
+  color: var(--white); 
+  font-size: 9px; 
+  font-weight: 700; 
+  letter-spacing: 0.14em; 
+  text-transform: uppercase; 
+  padding: 3px 9px; 
+}
 
 /* ── LIGHTBOX ── */
-.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; }
+.lightbox { 
+  position: fixed; 
+  inset: 0; 
+  background: rgba(0,0,0,0.92); 
+  z-index: 1000; 
+  display: none; 
+  align-items: center; 
+  justify-content: center; 
+}
 .lightbox.open { display: flex; }
-.lightbox-content { background: var(--white); max-width: 760px; width: 90%; padding: 40px; position: relative; }
-.lightbox-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); transition: color 0.2s; }
+.lightbox-content { 
+  background: var(--white); 
+  max-width: 760px; 
+  width: 90%; 
+  padding: 40px; 
+  position: relative; 
+}
+.lightbox-close { 
+  position: absolute; 
+  top: 16px; 
+  right: 16px; 
+  background: none; 
+  border: none; 
+  font-size: 24px; 
+  cursor: pointer; 
+  color: var(--gray); 
+  transition: color 0.2s; 
+}
 .lightbox-close:hover { color: var(--orange); }
-.lightbox-img { width: 100%; aspect-ratio: 4/3; background: var(--bg2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-.lightbox-img svg { opacity: 0.18; }
-.lightbox-title { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 6px; }
-.lightbox-desc { font-size: 14px; color: var(--gray); line-height: 1.6; }
+.lightbox-img { 
+  width: 100%; 
+  aspect-ratio: 4/3; 
+  background: var(--bg2); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-bottom: 20px; 
+  overflow: hidden;
+}
+.lightbox-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lightbox-title { 
+  font-family: 'Barlow Condensed', sans-serif; 
+  font-size: 26px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  color: var(--black); 
+  margin-bottom: 6px; 
+}
+.lightbox-desc { 
+  font-size: 14px; 
+  color: var(--gray); 
+  line-height: 1.6; 
+}
 
+/* Mobile Optimizations */
+@media (max-width: 900px) { 
+  .gallery-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px;
+  } 
+  .gallery-item.wide { grid-column: span 2; } 
+}
 
-@media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } .gallery-item.wide { grid-column: span 2; } .tool-showcase-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 600px) { .gallery-grid { grid-template-columns: 1fr 1fr; } .gallery-item.wide { grid-column: span 2; } .tool-showcase-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { 
+  .gallery-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px;
+  } 
+  .gallery-item-inner {
+    min-height: 180px; /* Prevents images from becoming too small */
+  }
+  .gallery-section { 
+    padding: 50px 5%; 
+  }
+  .gallery-section-title {
+    font-size: 28px;
+  }
+}
 </style>
 </head>
 <body>
@@ -191,73 +305,73 @@
   <div class="gallery-section-title fade-up">Product Showcase</div>
   <div class="gallery-grid" data-stagger>
 
-    <div class="gallery-item wide" >
+    <div class="gallery-item wide">
       <div class="gallery-item-inner" style="background:#EEEBE4;">
-        <img src="hoe-collection.png" height="310" width="630" alt="Hoe Round Eye Collection" class="product-image">
+        <img src="hoe-collection.png" alt="Hoe Round Eye Collection" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Hoe Round Eye Collection</div><div class="gallery-overlay-sub">6 weight variants — 1.5 to 4.25 LB</div></div></div>
       <span class="gallery-img-tag">Hoes</span>
     </div>
 
-    <div class="gallery-item" >
+    <div class="gallery-item">
       <div class="gallery-item-inner" style="background:#E8E4DD;">
-        <img src="hoe-sunken-eye.png" height="310" width="310" alt="Sunken Eye Hoe" class="product-image">
+        <img src="hoe-sunken-eye.png" alt="Sunken Eye Hoe" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Hoe Sunken Eye</div><div class="gallery-overlay-sub">2 – 3.50 LB</div></div></div>
       <span class="gallery-img-tag">Hoes</span>
     </div>
 
-    <div class="gallery-item" >
+    <div class="gallery-item">
       <div class="gallery-item-inner" style="background:#E4E4E0;">
-        <img src="hoe-heavy.png" height="310" width="310" alt="Heavy Hoe" class="product-image">
+        <img src="hoe-heavy.png" alt="Heavy Hoe" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Hoe Reinforced Blade</div><div class="gallery-overlay-sub">900 – 1700 GM</div></div></div>
       <span class="gallery-img-tag">Heavy</span>
     </div>
 
-    <div class="gallery-item wide" >
+    <div class="gallery-item wide">
       <div class="gallery-item-inner" style="background:#E0E4E8;">
-        <img src="spades-collection.png" height="310" width="630" alt="Spades Collection" class="product-image">
+        <img src="spades-collection.png" alt="Spades Collection" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Spades Collection</div><div class="gallery-overlay-sub">10+ variants — 1000 to 2150 GM</div></div></div>
       <span class="gallery-img-tag">Spades</span>
     </div>
 
-    <div class="gallery-item" >
+    <div class="gallery-item">
       <div class="gallery-item-inner" style="background:#ffffff;">
-        <img src="garden-spade.png" height="220" width="310" alt="Garden Spade with D-Handle" class="product-image">
+        <img src="garden-spade.png" alt="Garden Spade with D-Handle" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Garden Spade</div><div class="gallery-overlay-sub">With D-Handle · 1750–2150 GM</div></div></div>
       <span class="gallery-img-tag">Spades</span>
     </div>
 
-    <div class="gallery-item tall" >
-      <div class="gallery-item-inner" style="background:#ECE8E0; aspect-ratio:1/2;">
-        <img src="shovel-collection.png" height="620" width="310" alt="Shovels Range" class="product-image">
+    <div class="gallery-item tall">
+      <div class="gallery-item-inner" style="background:#ECE8E0;">
+        <img src="shovel-collection.png" alt="Shovels Range" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Shovels Range</div><div class="gallery-overlay-sub">8+ variants · 1–3 KG</div></div></div>
       <span class="gallery-img-tag">Shovels</span>
     </div>
 
-    <div class="gallery-item" >
+    <div class="gallery-item">
       <div class="gallery-item-inner" style="background:#ffffff;">
-        <img src="scraper-curved.png" height="280" width="280" alt="Scraper Curved" class="product-image">
+        <img src="scraper-curved.png" alt="Scraper Curved" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Scraper Curved</div><div class="gallery-overlay-sub">1 – 3 LB</div></div></div>
       <span class="gallery-img-tag">Scrapers</span>
     </div>
 
-    <div class="gallery-item" >
+    <div class="gallery-item">
       <div class="gallery-item-inner" style="background:#ffffff;">
-        <img src="mamooty.png" height="280" width="280" alt="Mamooty" class="product-image">
+        <img src="mamooty.png" alt="Mamooty" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Mamooty</div><div class="gallery-overlay-sub">6 – 10 LB</div></div></div>
       <span class="gallery-img-tag">Special</span>
     </div>
 
-    <div class="gallery-item" >
+    <div class="gallery-item">
       <div class="gallery-item-inner" style="background:#ffffff;">
-        <img src="romanian-hoe.png" height="280" width="280" alt="Romanian Hoe" class="product-image">
+        <img src="romanian-hoe.png" alt="Romanian Hoe" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Romanian Hoe</div><div class="gallery-overlay-sub">2 – 6 LB</div></div></div>
       <span class="gallery-img-tag">Special</span>
@@ -270,54 +384,42 @@
   <div class="gallery-section-title fade-up">Manufacturing Facility</div>
   <div class="gallery-grid" data-stagger>
 
-    <div class="gallery-item wide" >
+    <div class="gallery-item wide">
       <div class="gallery-item-inner" style="background:#E8E4DC;">
-        <img src="nirvana_factory.png" height="400" width="630" alt="Manufacturing Plant Aerial View" class="product-image">
+        <img src="nirvana_factory.png" alt="Manufacturing Plant Aerial View" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Manufacturing Plant</div><div class="gallery-overlay-sub">Salal, Sabarkantha, Gujarat</div></div></div>
       <span class="gallery-img-tag">Facility</span>
     </div>
 
-
-    <div class="gallery-item" >
-      <div class="gallery-item-inner" style="background:#E4E8E0;">
-        <img src="nirvana-inspection.png" height="310" width="310" alt="Quality Inspection Area" class="product-image">
-      </div>
-      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Quality Inspection</div><div class="gallery-overlay-sub">100% unit inspection</div></div></div>
-      <span class="gallery-img-tag">Quality</span>
-    </div>
-
-    <div class="gallery-item" >
+    <div class="gallery-item wide">
       <div class="gallery-item-inner" style="background:#E0E4E8;">
-        <img src="nirvana-packing.png" height="400" width="630" alt="Finished Goods Warehouse" class="product-image">
+        <img src="nirvana-packing.png" alt="Finished Goods Warehouse" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Finished Goods Warehouse</div><div class="gallery-overlay-sub">Ready for dispatch</div></div></div>
       <span class="gallery-img-tag">Facility</span>
     </div>
 
-    <div class="gallery-item wide" >
+    <div class="gallery-item wide">
       <div class="gallery-item-inner" style="background:#DDE4D8;">
-        <img src="nirvana-highway.png" height="310" width="630" alt="N.H-48 Location Aerial View" class="product-image">
+        <img src="nirvana-highway.png" alt="N.H-48 Location Aerial View" class="product-image">
       </div>
       <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">N.H-48 Location</div><div class="gallery-overlay-sub">Ahmedabad–Himatnagar Highway, Salal</div></div></div>
       <span class="gallery-img-tag">Location</span>
     </div>
-  </div>
-</div>
 
-
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <div class="lightbox-content" onclick="event.stopPropagation()">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    <div class="lightbox-img" id="lightbox-img">
-      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    <div class="gallery-item">
+      <div class="gallery-item-inner" style="background:#E4E8E0;">
+        <img src="nirvana-inspection.png" alt="Quality Inspection Area" class="product-image">
+      </div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><div class="gallery-overlay-title">Quality Inspection</div><div class="gallery-overlay-sub">100% unit inspection</div></div></div>
+      <span class="gallery-img-tag">Quality</span>
     </div>
-    <div class="lightbox-title" id="lightbox-title">Image Title</div>
-    <div class="lightbox-desc" id="lightbox-desc">Description</div>
+
   </div>
 </div>
+
+
 
 <footer>
   <div class="footer-grid">
@@ -368,25 +470,16 @@
 
 <script src="shared.js"></script>
 <script>
-function toggleMobile(){document.getElementById('mobileNav').classList.toggle('open');}
 function showSection(id, btn) {
   document.querySelectorAll('.gfilter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  if (id === 'all') { window.scrollTo({top:0,behavior:'smooth'}); return; }
+  if (id === 'all') { 
+    window.scrollTo({top:0, behavior:'smooth'}); 
+    return; 
+  }
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
-function openLightbox(title, desc) {
-  document.getElementById('lightbox-title').textContent = title;
-  document.getElementById('lightbox-desc').textContent = desc;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox(e) {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 </script>
 </body>
 </html>
